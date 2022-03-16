@@ -5,7 +5,7 @@ import TextEditor from './TextEditor';
 function Field() {
   return (
     <FieldWrap>
-      <FieldTools></FieldTools>
+      <FieldTools />
       <TextEditor />
     </FieldWrap>
   );

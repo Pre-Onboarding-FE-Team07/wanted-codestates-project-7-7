@@ -21,10 +21,10 @@ const SelectWrap = styled.div`
   min-width: 140px;
   flex: 1;
   border-right: 1px solid lightgray;
-  @media (max-width: 500px) {
+  ${({ theme }) => theme.createForm`
     min-width: 100%;
     border-right: 0;
-  }
+  `}
 `;
 const Select = styled.select`
   width: 100%;
