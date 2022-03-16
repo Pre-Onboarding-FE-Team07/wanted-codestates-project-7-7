@@ -20,9 +20,14 @@ const button = {
   },
 };
 
+const size = {
+  headerHeight: '56px',
+  toolHeight: '40px',
+};
 const theme = {
   color,
   button,
+  size,
 };
 
 export default theme;
