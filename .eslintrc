@@ -1,9 +1,10 @@
 {
-  "extends": ["react-app", "plugin:prettier/recommended"],
+  "extends": ["react-app", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended"],
   "rules": {
     "prettier/prettier": ["error"]
   },
-  "parser": "@babel/eslint-parser",
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "requireConfigFile": false
   }
