@@ -1,9 +1,11 @@
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Input, SelectType, OptionList, CheckBox } from './index';
 import { CgArrowsV, CgClose } from 'react-icons/cg';
+import { formTypes, formTextTypes } from 'contants/createForm';
+import { FormType } from 'interfaces/createForm';
+
 function FieldTools() {
-  const type = 'dropdown';
-  const placeholder = '플레이스홀더 예) 11시 30분';
   const options = [
     {
       id: 1,
@@ -14,17 +16,19 @@ function FieldTools() {
       name: 'XL',
     },
   ];
+  const [formType, setFormType] = useState<FormType>(formTypes[0]);
+  const handleChange = useCallback((target: FormType) => setFormType(target), []);
   return (
     <>
       <FieldToolsWrap>
-        <SelectType />
+        <SelectType options={formTypes} onChange={handleChange} />
         <Input placeholder="라벨 입력" />
         <CheckBox />
         <DragHandle />
         <DeleteButton />
       </FieldToolsWrap>
-      {type === String('input') && <Input placeholder={placeholder} />}
-      {type === String('dropdown') && <OptionList options={options} />}
+      {formTextTypes.includes(formType?.type) && <Input placeholder={formType?.placeholder} />}
+      {formType?.name === String('드롭다운') && <OptionList options={options} />}
     </>
   );
 }
