@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: 1em;
   }
   html, body {
     width: 100%;
@@ -28,6 +29,5 @@ const GlobalStyle = createGlobalStyle`
   button{
     border: none;
   }
-
 `;
 export default GlobalStyle;
