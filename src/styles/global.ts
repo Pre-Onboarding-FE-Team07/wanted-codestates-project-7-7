@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     font-size: 12px;
-    color: #495057,
+    color: #495057;
   }
   #root{
     margin: 0 auto;

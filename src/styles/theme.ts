@@ -8,8 +8,21 @@ const color = {
   fontTitleColor: '#212529',
 };
 
+const button = {
+  blue: {
+    backgroundColor: color.blue,
+    color: 'white',
+  },
+  lightgray: {
+    backgroundColor: color.lightGray,
+    border: '1px solid lightgray',
+    color: '#333333',
+  },
+};
+
 const theme = {
   color,
+  button,
 };
 
 export default theme;
