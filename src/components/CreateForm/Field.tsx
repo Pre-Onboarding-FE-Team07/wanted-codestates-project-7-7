@@ -1,7 +1,7 @@
 import { FieldType } from 'interfaces/createForm.d';
 import { memo } from 'react';
 import styled from 'styled-components';
-import FieldTools from './FieldTools/FieldTools';
+import FieldTools from './FieldTools';
 import TextEditor from './TextEditor';
 
 function Field({ data }: { data: FieldType }) {

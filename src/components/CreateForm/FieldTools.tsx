@@ -1,6 +1,6 @@
 import { useState, useCallback, useContext } from 'react';
 import styled from 'styled-components';
-import { Input, SelectType, OptionList, CheckBox } from './index';
+import { Input, SelectType, OptionList, CheckBox } from './FieldTools/index';
 import { CgArrowsV, CgClose } from 'react-icons/cg';
 import { formTypes, formTextTypes } from 'constants/createForm';
 import { FormType, FieldType } from 'interfaces/createForm.d';
