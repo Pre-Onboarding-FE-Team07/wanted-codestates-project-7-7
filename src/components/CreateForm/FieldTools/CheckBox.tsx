@@ -1,9 +1,19 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-function Checkbox() {
+interface CheckboxProps {
+  onChange: (checked: boolean) => void;
+}
+
+function Checkbox({ onChange }: CheckboxProps) {
+  const [checked, setChecked] = useState(true);
+  const handleChange = () => setChecked(!checked);
+  useEffect(() => {
+    onChange(checked);
+  }, [checked]);
   return (
     <CheckboxWrap>
-      <input type="checkbox" checked />
+      <input type="checkbox" checked={checked} onChange={handleChange} />
       <span>필수</span>
     </CheckboxWrap>
   );
