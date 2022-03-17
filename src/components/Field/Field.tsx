@@ -1,17 +1,19 @@
+import { FieldType } from 'interfaces/createForm.d';
+import { memo } from 'react';
 import styled from 'styled-components';
 import FieldTools from './FieldTools/FieldTools';
 import TextEditor from './TextEditor';
 
-function Field() {
+function Field({ data }: { data: FieldType }) {
   return (
     <FieldWrap>
-      <FieldTools />
+      <FieldTools data={data} />
       <TextEditor />
     </FieldWrap>
   );
 }
 
-export default Field;
+export default memo(Field);
 
 const FieldWrap = styled.section`
   width: 100%;

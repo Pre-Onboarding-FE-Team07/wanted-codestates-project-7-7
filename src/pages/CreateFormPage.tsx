@@ -1,26 +1,62 @@
-import styled, { css } from 'styled-components';
+import { useContext } from 'react';
+import styled from 'styled-components';
 import FieldList from '../components/Field/FieldList';
+import CreateFormProvider from 'context/CreateFormContext';
+import CreateFormButtonWrap from 'components/CreateFormButtonWrap';
 
 function CreateFormPage() {
-  const list = [{ id: 1 }, { id: 2 }];
   return (
-    <Wrap>
-      <FormSection>
-        <Label>제목</Label>
-        <InputTitle></InputTitle>
-      </FormSection>
-      <FormSection>
-        <Label>필드목록</Label>
-        <FieldList list={list} />
-      </FormSection>
-      <AddButton>필드 추가하기</AddButton>
-      <BottomButtonArea>
-        <Button>폼열기</Button>
-        <Button color="blue">저장하기</Button>
-      </BottomButtonArea>
-    </Wrap>
+    <CreateFormProvider>
+      <Wrap>
+        <FormSection>
+          <Label>제목</Label>
+          <InputTitle></InputTitle>
+        </FormSection>
+        <FormSection>
+          <Label>필드목록</Label>
+          <FieldList />
+        </FormSection>
+        <CreateFormButtonWrap />
+      </Wrap>
+    </CreateFormProvider>
   );
 }
+
+const sampleFormData = [
+  {
+    id: 'name',
+    type: 'text',
+    required: true,
+    label: '이름',
+    placeholder: '주민등록상 이름 입력',
+  },
+  {
+    id: 'phone',
+    type: 'phone',
+    required: true,
+    label: '휴대폰 번호',
+  },
+  {
+    id: 'address',
+    type: 'address',
+    required: true,
+    label: '배송지',
+  },
+  {
+    id: 'input_0',
+    type: 'select',
+    label: '옵션1',
+    options: ['S', 'L', 'XL', 'XXL'],
+    required: true,
+  },
+  {
+    id: 'input_1',
+    type: 'file',
+    label: '첨부파일',
+    required: false,
+    description: '<p>첨부파일은 위와 같이 입력할 수 있습니다.</p>',
+  },
+];
 
 export default CreateFormPage;
 
@@ -53,32 +89,4 @@ const InputTitle = styled.input`
   border-radius: 1rem;
   padding: 1rem;
   font-size: 1em;
-`;
-
-const ButtonStyle = styled.button`
-  padding: 1rem;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 1.2rem;
-`;
-
-const AddButton = styled(ButtonStyle)`
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.color.blue};
-  color: ${({ theme }) => theme.color.blue};
-  margin-top: 1rem;
-`;
-
-const BottomButtonArea = styled.div`
-  padding: 1rem;
-  float: right;
-`;
-
-const Button = styled(ButtonStyle)`
-  margin-left: 6px;
-  ${({ color, theme }) =>
-    css`
-      ${color === 'blue' ? theme.button.blue : theme.button.lightgray};
-    `};
 `;

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { FormType } from 'interfaces/createForm';
+import { FormType } from 'interfaces/createForm.d';
 
 interface Options {
   options: readonly FormType[];

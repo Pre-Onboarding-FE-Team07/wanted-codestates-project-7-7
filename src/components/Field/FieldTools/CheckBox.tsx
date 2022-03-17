@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 function Checkbox() {
+  const [checked, setChecked] = useState(true);
+  const handleChange = () => setChecked(!checked);
   return (
     <CheckboxWrap>
-      <input type="checkbox" checked />
+      <input type="checkbox" checked={checked} onChange={handleChange} />
       <span>필수</span>
     </CheckboxWrap>
   );

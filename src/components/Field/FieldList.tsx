@@ -1,19 +1,16 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import Field from './Field';
+import { FieldType } from 'interfaces/createForm.d';
+import { CreateFormContext } from 'context/CreateFormContext';
 
-interface FieldListProps {
-  list: FieldProps[];
-}
+function FieldList() {
+  const { state } = useContext(CreateFormContext);
 
-interface FieldProps {
-  id: number;
-}
-
-function FieldList({ list }: FieldListProps) {
   return (
     <FieldListWrap>
-      {list.map((field: FieldProps) => (
-        <Field key={field.id}></Field>
+      {state?.formData.map((field: FieldType) => (
+        <Field key={field.id} data={field}></Field>
       ))}
     </FieldListWrap>
   );

@@ -23,3 +23,11 @@ export const formTypes = Object.freeze([
 ]);
 
 export const formTextTypes = Object.freeze(['text', 'phone', 'address']);
+
+export const defaultField = Object.freeze({
+  id: 'field_1',
+  type: 'text',
+  required: true,
+  label: '이름',
+  placeholder: '',
+});

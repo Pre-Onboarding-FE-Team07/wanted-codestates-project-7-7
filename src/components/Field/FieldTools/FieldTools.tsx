@@ -1,23 +1,27 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { Input, SelectType, OptionList, CheckBox } from './index';
 import { CgArrowsV, CgClose } from 'react-icons/cg';
-import { formTypes, formTextTypes } from 'contants/createForm';
-import { FormType } from 'interfaces/createForm';
+import { formTypes, formTextTypes } from 'constants/createForm';
+import { FormType, FieldType } from 'interfaces/createForm.d';
+import { CreateFormContext } from 'context/CreateFormContext';
+import { deleteField } from 'context/actions/createForm';
 
-function FieldTools() {
-  const options = [
-    {
-      id: 1,
-      name: 'S',
-    },
-    {
-      id: 2,
-      name: 'XL',
-    },
-  ];
+const options = [
+  {
+    id: 1,
+    name: 'S',
+  },
+  {
+    id: 2,
+    name: 'XL',
+  },
+];
+function FieldTools({ data }: { data: FieldType }) {
+  const { dispatch } = useContext(CreateFormContext);
   const [formType, setFormType] = useState<FormType>(formTypes[0]);
   const handleChange = useCallback((target: FormType) => setFormType(target), []);
+  const handleDeleteClick = () => dispatch(deleteField(data.id));
   return (
     <>
       <FieldToolsWrap>
@@ -25,7 +29,7 @@ function FieldTools() {
         <Input placeholder="라벨 입력" />
         <CheckBox />
         <DragHandle />
-        <DeleteButton />
+        <DeleteButton onClick={handleDeleteClick} />
       </FieldToolsWrap>
       {formTextTypes.includes(formType?.type) && <Input placeholder={formType?.placeholder} />}
       {formType?.name === String('드롭다운') && <OptionList options={options} />}
