@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     background: #fff;
     position: relative;
-    overflow: visible unset;
     font-weight: bold;
   }
   

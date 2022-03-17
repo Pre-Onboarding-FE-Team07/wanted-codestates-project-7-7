@@ -1,10 +1,15 @@
 import { FieldType, CreateFormType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
-import { ADD_FIELD, UPDATE_FIELD, DELETE_FIELD } from '../actions/types';
+import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD } from '../actions/types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const reducer = (state: CreateFormType, action: any) => {
   switch (action.type) {
+    case SET_FIELDS:
+      return {
+        ...state,
+        formData: action.newFields,
+      };
     case ADD_FIELD:
       const { formData } = state;
       let lastId = 0;

@@ -19,7 +19,7 @@ function FieldTools({ data }: { data: FieldType }) {
         <SelectType options={formTypes} onChange={handleChange} />
         <Input placeholder="라벨 입력" />
         <CheckBox onChange={handleToggleRequired} />
-        <DragHandle />
+        <DragHandle className="handle" />
         <DeleteButton onClick={handleDeleteClick} />
       </FieldToolsWrap>
       {formTextTypes.includes(formType?.type) && <Input placeholder={formType?.placeholder} />}

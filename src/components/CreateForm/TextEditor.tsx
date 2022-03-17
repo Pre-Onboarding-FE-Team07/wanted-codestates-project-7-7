@@ -65,9 +65,8 @@ const TextEditorWrap = styled.div`
       float: left;
     }
     .ql-container {
-      height: 40vh;
+      height: 32vh;
       max-height: 240px;
-      overflow: visible unset;
       font-size: 16px;
       border: none;
       min-height: 50px;
