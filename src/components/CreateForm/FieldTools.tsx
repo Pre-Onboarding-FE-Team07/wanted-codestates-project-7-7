@@ -5,7 +5,7 @@ import { CgArrowsV, CgClose } from 'react-icons/cg';
 import { formTypes, formTextTypes } from 'constants/createForm';
 import { FormType, FieldType } from 'interfaces/createForm.d';
 import { CreateFormContext } from 'context/CreateFormContext';
-import { deleteField } from 'context/actions/createForm';
+import { deleteField, updateField } from 'context/actions/createForm';
 
 const options = [
   {
@@ -22,12 +22,13 @@ function FieldTools({ data }: { data: FieldType }) {
   const [formType, setFormType] = useState<FormType>(formTypes[0]);
   const handleChange = useCallback((target: FormType) => setFormType(target), []);
   const handleDeleteClick = () => dispatch(deleteField(data.id));
+  const handleToggleRequired = (required: boolean) => dispatch(updateField({ ...data, required }));
   return (
     <>
       <FieldToolsWrap>
         <SelectType options={formTypes} onChange={handleChange} />
         <Input placeholder="라벨 입력" />
-        <CheckBox />
+        <CheckBox onChange={handleToggleRequired} />
         <DragHandle />
         <DeleteButton onClick={handleDeleteClick} />
       </FieldToolsWrap>
