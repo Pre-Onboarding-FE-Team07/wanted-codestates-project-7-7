@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import { Form, Pagination } from 'antd';
 import Name from 'components/Form/Name';
 import Phone from 'components/Form/Phone';

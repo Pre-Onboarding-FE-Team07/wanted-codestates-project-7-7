@@ -1,5 +1,5 @@
 import { Select, Form } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import styled from 'styled-components';
 
 function SelectBox() {
