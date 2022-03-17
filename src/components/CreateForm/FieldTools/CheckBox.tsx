@@ -10,7 +10,7 @@ function Checkbox({ onChange }: CheckboxProps) {
   const handleChange = () => setChecked(!checked);
   useEffect(() => {
     onChange(checked);
-  }, [checked]);
+  }, [checked, onChange]);
   return (
     <CheckboxWrap>
       <input type="checkbox" checked={checked} onChange={handleChange} />
