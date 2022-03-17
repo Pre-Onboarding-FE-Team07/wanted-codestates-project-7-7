@@ -1,8 +1,7 @@
-import { Button } from 'antd';
+import { Button, ButtonProps } from 'antd';
 import styled from 'styled-components';
-import { buttonProps } from 'interfaces/button.d';
 
-function Btn({ style, children, ...rest }: buttonProps) {
+function Btn({ style, children, ...rest }: ButtonProps) {
   return (
     <ButtonCustom style={style} {...rest}>
       {children}

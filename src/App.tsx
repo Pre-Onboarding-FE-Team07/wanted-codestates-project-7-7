@@ -12,8 +12,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Header />
       <Router>
+        <Header />
         <Routes>
           <Route path="/" element={<FormListPage />} />
           <Route path="/create" element={<CreateFormPage />} />
