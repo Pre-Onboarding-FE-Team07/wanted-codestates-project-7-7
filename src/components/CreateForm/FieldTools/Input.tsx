@@ -12,7 +12,7 @@ export default Input;
 const InputWrap = styled.input`
   border: 0;
   border-bottom: 1px solid lightgray;
-  padding: 0.8rem 1rem;
+  padding: 0.4rem 1rem;
   display: flex;
   justify-content: center;
   flex: 1;

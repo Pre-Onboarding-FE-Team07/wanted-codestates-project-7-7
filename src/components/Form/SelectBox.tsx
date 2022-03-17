@@ -31,7 +31,7 @@ const SelectItem = styled(Select)`
     background: ${(props) => props.theme.color.lightGray} !important;
     border-radius: 1rem !important;
     border: 0 !important;
-    padding: 0.8rem 1rem !important;
+    padding: 0.4rem 1rem !important;
     height: 4rem !important;
   }
 `;

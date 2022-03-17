@@ -1,14 +1,17 @@
 import { FieldType } from 'interfaces/createForm.d';
-import { memo } from 'react';
+import { memo, useState, useRef } from 'react';
 import styled from 'styled-components';
 import FieldTools from './FieldTools';
 import TextEditor from './TextEditor';
+import ReactQuill from 'react-quill';
 
 function Field({ data }: { data: FieldType }) {
+  const quillRef = useRef<ReactQuill>(null);
+  const [htmlContent, setHtmlContent] = useState<string>('');
   return (
     <FieldWrap>
       <FieldTools data={data} />
-      <TextEditor />
+      <TextEditor quillRef={quillRef} htmlContent={htmlContent} setHtmlContent={setHtmlContent} />
     </FieldWrap>
   );
 }
@@ -25,5 +28,5 @@ const FieldWrap = styled.section`
   > * {
     font-size: 1.4rem !important;
   }
-  overflow: hidden;
+  overflow: visible unset;
 `;
