@@ -21,42 +21,6 @@ function CreateFormPage() {
   );
 }
 
-const sampleFormData = [
-  {
-    id: 'name',
-    type: 'text',
-    required: true,
-    label: '이름',
-    placeholder: '주민등록상 이름 입력',
-  },
-  {
-    id: 'phone',
-    type: 'phone',
-    required: true,
-    label: '휴대폰 번호',
-  },
-  {
-    id: 'address',
-    type: 'address',
-    required: true,
-    label: '배송지',
-  },
-  {
-    id: 'input_0',
-    type: 'select',
-    label: '옵션1',
-    options: ['S', 'L', 'XL', 'XXL'],
-    required: true,
-  },
-  {
-    id: 'input_1',
-    type: 'file',
-    label: '첨부파일',
-    required: false,
-    description: '<p>첨부파일은 위와 같이 입력할 수 있습니다.</p>',
-  },
-];
-
 export default CreateFormPage;
 
 const Wrap = styled.div`
