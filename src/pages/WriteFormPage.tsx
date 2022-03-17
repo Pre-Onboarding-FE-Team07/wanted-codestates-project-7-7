@@ -1,49 +1,32 @@
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { Form } from 'antd';
-import Phone from '../components/Form/Phone';
-import PostCode from '../components/Form/PostCode';
-import File from '../components/Form/File';
-import Btn from '../components/Btn';
-import Agreement from '../components/Form/Agreement';
+import Phone from '../components/WrtieForm/Phone';
+import PostCode from '../components/WrtieForm/PostCode';
+import File from '../components/WrtieForm/File';
+import Btn from '../components/ButtonCustom';
+import Agreement from '../components/WrtieForm/Agreement';
 import { userProps } from '../interfaces/user';
-import SelectBox from '../components/Form/SelectBox';
-import Name from '../components/Form/Name';
-import { useRef, useState, useEffect } from 'react';
+import SelectBox from '../components/WrtieForm/SelectBox';
+import Name from '../components/WrtieForm/Name';
+import { useUserListDispatch } from 'context/UserListContext';
+
 function WriteFormPage() {
   const [form] = Form.useForm();
-  const formRef = useRef(null);
-  const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
-  // const addressRef = useRef<HTMLInputElement>(null);
+  const dispatch = useUserListDispatch();
+
   const onFinish = (values: userProps) => {
     values.address = '주소';
     console.log('Success:', values);
+    dispatch({
+      type: 'CREATE',
+      data: values,
+    });
   };
-
-  useEffect(() => {
-    forceUpdate({});
-  }, [form]);
-
-  // const isChecked = () => {
-  //   const isFormKey = ['name', 'phone', 'adress', 'input_0', 'input_1', 'arggment_0'];
-  //   isFormKey.forEach((item) => {
-  //     return form.getFieldValue(item).length > 0 ? true : false;
-  //   });
-  // };
-
-  // const isFormKey = ['name', 'phone', 'adress', 'input_0', 'input_1', 'arggment_0'];
-  // const isChecked = isFormKey.forEach((item) => {
-  //   console.log(form.getFieldValue(item));
-  //   return form.getFieldValue(item)?.length > 0 ? true : false;
-  // });
-  const isChecked = form
-    .getFieldsError()
-    .filter(({ name }) => form.getFieldValue(name[0])?.length).length;
-  console.log(isChecked);
 
   return (
     <Write>
-      <Form form={form} onFinish={onFinish} layout="vertical" autoComplete="off" ref={formRef}>
+      <Form form={form} onFinish={onFinish} layout="vertical" autoComplete="off">
         <Name />
         <Phone />
         <PostCode />
@@ -53,14 +36,7 @@ function WriteFormPage() {
         <ButtonArea>
           <Form.Item shouldUpdate>
             {() => (
-              <Btn
-                type="primary"
-                htmlType="submit"
-                disabled={
-                  !form.isFieldsTouched(true) ||
-                  !!form.getFieldsError().filter(({ errors }) => errors.length).length
-                }
-              >
+              <Btn type="primary" htmlType="submit">
                 제출하기
               </Btn>
             )}

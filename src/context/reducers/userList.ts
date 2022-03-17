@@ -7,9 +7,7 @@ export default function userListReducer(
 ): UserListState {
   switch (action.type) {
     case 'CREATE':
-      const nextId = Math.max(0, ...state.map((user) => user.id)) + 1;
       return state.concat({
-        id: nextId,
         name: action.data.name,
         phone: action.data.phone,
         address: action.data.address,

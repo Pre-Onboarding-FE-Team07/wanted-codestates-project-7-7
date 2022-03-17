@@ -1,18 +1,9 @@
+import { userProps } from 'interfaces/user';
 import React, { createContext, Dispatch, useReducer, useContext } from 'react';
 import { UserListAction } from './actions/userList';
 import userListReducer from './reducers/userList';
 
-export type userData = {
-  id: number;
-  name: string;
-  phone: string;
-  address: string;
-  input_0: string;
-  input_1: string;
-  argeement_0: boolean;
-};
-
-export type UserListState = userData[];
+export type UserListState = userProps[];
 
 const UserListContext = createContext<UserListState | undefined>(undefined);
 
@@ -22,12 +13,19 @@ const UserListDispatchContext = createContext<UserListDispatch | undefined>(unde
 export const UserListProvider = ({ children }: { children: React.ReactNode }) => {
   const [userList, dispatch] = useReducer(userListReducer, [
     {
-      id: 1,
       name: '온보딩',
       phone: '010-1234-5678',
       address: '서울시 강남구',
-      input_0: '과자',
-      input_1: 'https://cwcontent.asiae.co.kr/asiaresize/215/2020051108220528346_1589152925.jpg',
+      input_0: '프론트엔드',
+      input_1: 'https://i.pinimg.com/564x/64/8a/da/648ada9afe5edd10a3f787db11ca4f67.jpg',
+      argeement_0: true,
+    },
+    {
+      name: '팀세븐',
+      phone: '010-1234-5678',
+      address: '서울시 종로구',
+      input_0: '쿠키',
+      input_1: 'https://i.pinimg.com/564x/a6/09/64/a609647c57faa76636d83cf8e8d2cb59.jpg',
       argeement_0: true,
     },
   ]);

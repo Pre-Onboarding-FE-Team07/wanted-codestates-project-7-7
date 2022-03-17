@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import React, { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
-import Btn from '../Btn';
+import Btn from '../ButtonCustom';
 
 function PostCode() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,8 +35,8 @@ function PostCode() {
       rules={[
         {
           required: true,
-          // validator: isOrNotAddress,
-          message: '주소를 입력해주세요!',
+          validator: isOrNotAddress,
+          // message: '주소를 입력해주세요!',
         },
       ]}
     >

@@ -1,17 +1,17 @@
 import { Button, ButtonProps } from 'antd';
 import styled from 'styled-components';
 
-function Btn({ style, children, ...rest }: ButtonProps) {
+function ButtonCustom({ style, children, ...rest }: ButtonProps) {
   return (
-    <ButtonCustom style={style} {...rest}>
+    <Btn style={style} {...rest}>
       {children}
-    </ButtonCustom>
+    </Btn>
   );
 }
 
-export default Btn;
+export default ButtonCustom;
 
-const ButtonCustom = styled(Button)`
+const Btn = styled(Button)`
   border-radius: 5rem;
   width: 10rem;
   height: 3.5rem;

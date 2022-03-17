@@ -1,3 +1,3 @@
-import { userData } from '../UserListContext';
+import { userProps } from 'interfaces/user';
 
-export type UserListAction = { type: 'CREATE'; data: userData };
+export type UserListAction = { type: 'CREATE'; data: userProps };
