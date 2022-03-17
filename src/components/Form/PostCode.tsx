@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Input, Form, Modal } from 'antd';
 import 'antd/dist/antd.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
 import Btn from '../Btn';
@@ -19,6 +19,7 @@ function PostCode() {
     setIsAddress(isAddress.concat(' ').concat(isDetail));
     setIsModalVisible(false);
   };
+
   const isOrNotAddress = () => {
     if (isAddress.length === 0) {
       return Promise.reject(new Error('주소를 입력해주세요!'));
@@ -34,7 +35,8 @@ function PostCode() {
       rules={[
         {
           required: true,
-          validator: isOrNotAddress,
+          // validator: isOrNotAddress,
+          message: '주소를 입력해주세요!',
         },
       ]}
     >
@@ -63,7 +65,7 @@ function PostCode() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsDetail(e.target.value)}
               value={isDetail}
             />
-            <Btn type="primary" onClick={onAddress}>
+            <Btn type="primary" onClick={onAddress} htmlType="button">
               입력완료
             </Btn>
           </>

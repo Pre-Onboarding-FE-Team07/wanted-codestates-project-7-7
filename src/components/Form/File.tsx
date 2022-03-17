@@ -28,12 +28,12 @@ function File() {
     }
     if (info.file.status === 'done') {
       // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: string) =>
+      getBase64(info.file.originFileObj, (imageUrl: string) => {
         setImg({
           imageUrl,
           loading: false,
-        })
-      );
+        });
+      });
     }
     if (info.file.status === 'removed') {
       setImg({
@@ -42,9 +42,8 @@ function File() {
       });
     }
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function getBase64(img: any, callback: any) {
-    console.log(img);
-    console.log(callback);
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
