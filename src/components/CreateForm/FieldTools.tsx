@@ -1,22 +1,12 @@
 import { useState, useCallback, useContext } from 'react';
 import styled from 'styled-components';
-import { Input, SelectType, OptionList, CheckBox } from './FieldTools/index';
+import { SelectType, OptionList, CheckBox } from './FieldTools/index';
 import { CgArrowsV, CgClose } from 'react-icons/cg';
 import { formTypes, formTextTypes } from 'constants/createForm';
 import { FormType, FieldType } from 'interfaces/createForm.d';
 import { CreateFormContext } from 'context/CreateFormContext';
 import { deleteField, updateField } from 'context/actions/createForm';
 
-const options = [
-  {
-    id: 1,
-    name: 'S',
-  },
-  {
-    id: 2,
-    name: 'XL',
-  },
-];
 function FieldTools({ data }: { data: FieldType }) {
   const { dispatch } = useContext(CreateFormContext);
   const [formType, setFormType] = useState<FormType>(formTypes[0]);
@@ -33,7 +23,7 @@ function FieldTools({ data }: { data: FieldType }) {
         <DeleteButton onClick={handleDeleteClick} />
       </FieldToolsWrap>
       {formTextTypes.includes(formType?.type) && <Input placeholder={formType?.placeholder} />}
-      {formType?.name === String('드롭다운') && <OptionList options={options} />}
+      {formType?.name === String('드롭다운') && <OptionList />}
     </>
   );
 }
@@ -65,3 +55,17 @@ const DeleteButton = styled(CgClose)`
   color: white;
   cursor: pointer;
 `;
+
+const Input = styled.input`
+  border: 0;
+  border-bottom: 1px solid lightgray;
+  padding: 0.4rem 1rem;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  ::placeholder {
+    font-size: 0.9em;
+  }
+`;
+export { Input };

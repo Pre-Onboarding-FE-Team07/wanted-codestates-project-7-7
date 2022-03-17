@@ -1,24 +1,55 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Option from './Option';
-import Input from './Input';
+import { Input } from '../FieldTools';
 
-interface OptionsListProps {
-  options: OptionType[];
-}
 interface OptionType {
-  id: number;
+  id: string;
   name: string;
 }
+type Options = Array<OptionType>;
 
-function OptionList({ options }: OptionsListProps) {
+let count = 0;
+const isDuplicate = (arr: Options, keyword: string) =>
+  arr.some(({ name }: OptionType) => name === keyword);
+
+function OptionList() {
+  const [options, setOptions] = useState<Options>([]);
+  const [input, setInput] = useState('');
+
+  const handleChange = (e: { target: HTMLInputElement }) => setInput(e.target.value);
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Comma') {
+      const name = input.replace(',', '');
+      if (!isDuplicate(options, name)) {
+        const option = {
+          id: String(count + 1),
+          name,
+        };
+        count++;
+        setOptions([...options, option]);
+      }
+      setInput('');
+    }
+  };
+
+  const handleClick = (id: string) => {
+    setOptions((options: Options) => options.filter((option: OptionType) => option.id !== id));
+  };
+
   return (
     <OptionListWrap>
       <OptionsWrap>
-        {options.map((option: OptionType) => (
-          <Option key={option.id} {...option} />
+        {options?.map((option: OptionType) => (
+          <Option onClick={handleClick} key={option.id} {...option} />
         ))}
+        <Input
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+          placeholder="옵션 (각 아이템은 콤마(,)로 구분합니다.)"
+          value={input}
+        />
       </OptionsWrap>
-      <Input placeholder="옵션 (각 아이템은 콤마(,)로 구분합니다.)" />
     </OptionListWrap>
   );
 }
@@ -27,18 +58,27 @@ export default OptionList;
 
 const OptionListWrap = styled.div`
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   border-bottom: 1px solid lightgray;
   display: flex;
   justify-content: center;
-  > * {
-    border-bottom: 0 !important;
-  }
 `;
 
-const OptionsWrap = styled.ul`
+const OptionsWrap = styled.div`
+  width: 100%;
   display: flex;
-  padding: 0.4rem;
   font-size: 1.2rem;
-  gap: 4px;
+  flex-flow: row wrap;
+  padding: 0.4rem 0;
+  gap: 4px 0px;
+  button {
+    margin-left: 4px;
+    &:last-of-type {
+      margin-right: 4px;
+    }
+  }
+  input {
+    min-width: 100px;
+    border-bottom: 0 !important;
+  }
 `;
