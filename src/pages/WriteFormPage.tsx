@@ -1,5 +1,52 @@
+import styled from 'styled-components';
+import 'antd/dist/antd.css';
+import { Form } from 'antd';
+import Name from 'components/Name';
+import Phone from 'components/Phone';
+import SelectBox from 'components/SelectBox';
+import PostCode from 'components/PostCode';
+import File from 'components/File';
+import Btn from 'components/Btn';
+import Agreement from 'components/Agreement';
+import { userProps } from 'types/user.type';
+
 function WriteFormPage() {
-  return <div>WriteFormPage</div>;
+  const [form] = Form.useForm();
+
+  const onFinish = (values: userProps) => {
+    values.address = '주소';
+    console.log('Success:', values);
+  };
+
+  return (
+    <Write>
+      <Form form={form} onFinish={onFinish} layout="vertical" autoComplete="off">
+        <Name />
+        <Phone />
+        <PostCode />
+        <SelectBox />
+        <File />
+        <Agreement />
+        <ButtonArea>
+          <Form.Item>
+            <Btn type="primary" htmlType="submit">
+              제출하기
+            </Btn>
+          </Form.Item>
+          <Btn>취소하기</Btn>
+        </ButtonArea>
+      </Form>
+    </Write>
+  );
 }
 
 export default WriteFormPage;
+
+const Write = styled.div`
+  margin: 2rem;
+`;
+
+const ButtonArea = styled.div`
+  display: flex;
+  justify-content: center;
+`;

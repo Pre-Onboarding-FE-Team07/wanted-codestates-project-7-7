@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     background: #fff;
     position: relative;
     overflow: hidden auto;
+    font-weight: bold;
   }
   
   button, a, svg{
