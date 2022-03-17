@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface InputProps {
-  placeholder: string;
+  placeholder?: string;
 }
 function Input({ placeholder }: InputProps) {
   return <InputWrap placeholder={placeholder}></InputWrap>;
