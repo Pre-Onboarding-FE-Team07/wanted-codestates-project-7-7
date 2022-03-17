@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import FieldList from 'components/CreateForm/FieldList';
 import CreateFormProvider from 'context/CreateFormContext';
-import CreateFormButtonWrap from 'components/CreateFormButtonWrap';
+import CreateFormButtonWrap from 'components/CreateForm/CreateFormButtonWrap';
 
 function CreateFormPage() {
   return (
