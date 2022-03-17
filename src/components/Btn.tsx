@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { buttonProps } from 'types/button.types';
+import { buttonProps } from 'interfaces/button.d';
 
 function Btn({ style, children, ...rest }: buttonProps) {
   return (
