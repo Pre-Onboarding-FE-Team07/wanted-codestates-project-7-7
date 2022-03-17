@@ -25,7 +25,6 @@ export default CreateFormPage;
 
 const Wrap = styled.div`
   width: 100%;
-  height: 100%;
   padding: 2rem 1rem;
   font-size: 1.2rem;
 `;
