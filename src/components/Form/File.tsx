@@ -35,17 +35,26 @@ function File() {
         })
       );
     }
+    if (info.file.status === 'removed') {
+      setImg({
+        imageUrl: '',
+        loading: false,
+      });
+    }
   };
   function getBase64(img: any, callback: any) {
+    console.log(img);
+    console.log(callback);
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
   return (
-    <Form.Item name="input_1" label="첨부파일" valuePropName="fileList">
+    <Form.Item name="input_1" label="첨부파일">
       <Dragger
         style={{ borderRadius: '1rem', padding: '2rem 1rem' }}
         {...props}
+        maxCount={1}
         onChange={(info: UploadChangeParam<UploadFile<unknown>>) => handleChange(info)}
       >
         {img.imageUrl ? (
