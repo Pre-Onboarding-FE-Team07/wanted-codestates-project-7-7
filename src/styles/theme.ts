@@ -1,3 +1,5 @@
+import { CSSProp } from 'styled-components';
+
 type MediaQueryProps = {
   createForm: number;
   mobile: number;
@@ -15,7 +17,7 @@ const sizes: MediaQueryProps = {
 const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce((acc, label) => {
   acc[label] = (style: string) => `@media (max-width: ${sizes[label] / 16}em) { ${style} }`;
   return acc;
-}, {} as { [index: string]: unknown });
+}, {} as { [key in keyof typeof sizes]: (style: string) => CSSProp });
 
 const color = {
   blue: '#0164FF',
