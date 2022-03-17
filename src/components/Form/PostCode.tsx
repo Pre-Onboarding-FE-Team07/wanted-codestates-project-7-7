@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
-import Btn from './Btn';
+import Btn from '../Btn';
 
 function PostCode() {
   const [isModalVisible, setIsModalVisible] = useState(false);

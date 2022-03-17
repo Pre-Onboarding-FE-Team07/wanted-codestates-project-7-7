@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { Form } from 'antd';
-import Name from 'components/Name';
-import Phone from 'components/Phone';
-import SelectBox from 'components/SelectBox';
-import PostCode from 'components/PostCode';
-import File from 'components/File';
+import Name from 'components/Form/Name';
+import Phone from 'components/Form/Phone';
+import SelectBox from 'components/Form/SelectBox';
+import PostCode from 'components/Form/PostCode';
+import File from 'components/Form/File';
 import Btn from 'components/Btn';
-import Agreement from 'components/Agreement';
+import Agreement from 'components/Form/Agreement';
 import { userProps } from 'types/user.type';
 
 function WriteFormPage() {
