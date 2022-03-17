@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 import { Form } from 'antd';
-import Phone from 'components/Form/Phone';
-import PostCode from 'components/Form/PostCode';
-import File from 'components/Form/File';
-import Btn from 'components/Btn';
-import Agreement from 'components/Form/Agreement';
-import { userProps } from 'interfaces/user.d';
-import SelectBox from 'components/Form/SelectBox';
-import Name from 'components/Form/Name';
+import Phone from '../components/Form/Phone';
+import PostCode from '../components/Form/PostCode';
+import File from '../components/Form/File';
+import Btn from '../components/Btn';
+import Agreement from '../components/Form/Agreement';
+import { userProps } from '../interfaces/user';
+import SelectBox from '../components/Form/SelectBox';
+import Name from '../components/Form/Name';
 
 function WriteFormPage() {
   const [form] = Form.useForm();

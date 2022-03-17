@@ -42,7 +42,7 @@ function File() {
     reader.readAsDataURL(img);
   }
   return (
-    <Form.Item name="input_1" label="첨부파일">
+    <Form.Item name="input_1" label="첨부파일" valuePropName="fileList">
       <Dragger
         style={{ borderRadius: '1rem', padding: '2rem 1rem' }}
         {...props}
