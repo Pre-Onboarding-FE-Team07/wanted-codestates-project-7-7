@@ -56,6 +56,7 @@ function File({ setUrl }: FileProps) {
     <Form.Item
       name="input_1"
       label="첨부파일"
+      valuePropName="fileList"
       rules={[
         {
           required: false,
