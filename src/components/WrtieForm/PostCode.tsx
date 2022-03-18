@@ -37,29 +37,30 @@ function PostCode() {
   };
 
   return (
-    <Form.Item
-      name="address"
-      label="배송지"
-      rules={[
-        {
-          required: true,
-          validator: isOrNotAddress,
-          // message: '주소를 입력해주세요!',
-        },
-      ]}
-    >
-      <InputAddress onClick={showModal} value={isAddress} />
+    <div>
+      <Form.Item
+        name="address"
+        label="배송지"
+        rules={[
+          {
+            required: true,
+            validator: isOrNotAddress,
+          },
+        ]}
+      >
+        <InputAddress onClick={showModal} value={isAddress} />
+      </Form.Item>
       <Modal
-        title={[
+        title={
           isAddress.length > 0 ? (
-            <>
+            <div>
               <FiChevronLeft onClick={() => setIsAddress('')} />
               <span>&nbsp; 배송주소</span>
-            </>
+            </div>
           ) : (
             <p>배송주소</p>
-          ),
-        ]}
+          )
+        }
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
@@ -79,7 +80,7 @@ function PostCode() {
           </>
         )}
       </Modal>
-    </Form.Item>
+    </div>
   );
 }
 
