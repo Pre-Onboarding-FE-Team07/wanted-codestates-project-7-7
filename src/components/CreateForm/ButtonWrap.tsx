@@ -1,12 +1,10 @@
 import { useContext, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { FormDataContext } from 'context/FormDataContext';
-import { FormListContext } from 'context/FormListContext';
 import { addField } from 'context/actions/formData';
-import { addForm } from 'context/actions/formList';
 import Modal from './Modal';
 import { FieldListType, FieldType } from 'interfaces/createForm.d';
-import { useNavigate } from 'react-router-dom';
+import Toast from 'utils/toast';
 
 const checkEmptyMustInput = (fieldList: FieldListType) => {
   return fieldList.some((field: FieldType) => {
@@ -14,27 +12,24 @@ const checkEmptyMustInput = (fieldList: FieldListType) => {
   });
 };
 function CreateFormButtonWrap() {
-  const navigate = useNavigate();
   const { state, dispatch } = useContext(FormDataContext);
-  const { formListDispatch } = useContext(FormListContext);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const handleAddClick = () => dispatch(addField());
   const handleSaveClick = () => {
     if (state.fieldList.length === 0) {
-      alert('적어도 하나 이상의 필드를 추가해주세요.');
+      Toast('warning', '적어도 하나 이상의 필드를 추가해주세요.');
       return;
     }
     if (state.title === '') {
-      alert('제목을 작성해주세요.');
+      Toast('warning', '제목을 작성해주세요.');
       return;
     }
     if (checkEmptyMustInput(state.fieldList)) {
-      alert('작성하지 않은 항목이 있습니다.');
+      Toast('warning', '작성하지 않은 항목이 있습니다.');
       return;
     }
-    formListDispatch(addForm(state));
-    alert('저장되었습니다.');
-    navigate('/');
+    console.log(state);
+    //context에 저장하기
   };
   const toggleModal = useCallback(
     () => setIsModalOpen((isModalOpen) => !isModalOpen),
