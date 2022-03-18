@@ -5,3 +5,5 @@ export const DELETE_FIELD = 'form/DELETE_FIELD';
 export const UPDATE_TITLE = 'form/UPDATE_TITLE';
 
 export const UPDATE_FIELD_DATA = 'field/UPDATE_FIELD_DATA';
+
+export const ADD_FORM = 'form/ADD_FORM';
