@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 import { Pagination } from 'antd';
 import AddButton from 'components/Main/AddButton';
-import DropdownList from 'components/Main/DropdownList';
+import { RiFileListLine, RiFile2Line } from 'react-icons/ri';
+
 import { FormListContext } from 'context/FormListContext';
 import { FormDataStateType } from 'interfaces/createForm.d';
 import { useContext, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function FormListPage() {
+  const navigate = useNavigate();
   const { formListState } = useContext(FormListContext);
   const formList = useMemo(() => formListState.formList, [formListState]);
+
   return (
     <Container>
       <Wrapper>
@@ -20,11 +23,18 @@ function FormListPage() {
       </Wrapper>
       <FormCard>
         {formList?.map((form: FormDataStateType) => (
-          <li key={form.id}>{form.title}</li>
+          <FormItem key={form.id}>
+            <p>{form.title}</p>
+            <IconWrap>
+              <span onClick={() => navigate(`/userData/${form.id}`)}>
+                <RiFileListLine />
+              </span>
+              <span onClick={() => navigate(`/write/${form.id}`)}>
+                <RiFile2Line />
+              </span>
+            </IconWrap>
+          </FormItem>
         ))}
-        <DropDownWrap>
-          <DropdownList />
-        </DropDownWrap>
       </FormCard>
       <PageContainer>
         <Pagination defaultCurrent={1} total={50} />
@@ -58,19 +68,38 @@ const Label = styled.label`
 
 const FormCard = styled.ul`
   width: 100%;
-  height: 100%;
-  height: 5rem;
-  border: 1px solid black;
-  list-style: none;
-  margin: 1rem 0;
-  position: relative;
 `;
 
-const DropDownWrap = styled.div`
+const FormItem = styled.div`
+  width: 100%;
+  height: 5rem;
   display: flex;
-  position: absolute;
-  top: 16px;
-  right: 10px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 1rem 0;
+  padding: 2rem;
+  background: #eeeeee;
+  font-size: 1.6rem;
+
+  p {
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+  }
+`;
+
+const IconWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 1.8rem;
+
+  span:nth-child(2) {
+    margin-left: 0.5rem;
+  }
 `;
 
 const PageContainer = styled.footer`
