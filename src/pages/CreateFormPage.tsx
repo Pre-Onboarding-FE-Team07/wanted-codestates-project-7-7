@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FieldList from 'components/CreateForm/FieldList';
 import CreateFormProvider, { FormDataContext } from 'context/FormDataContext';
 import CreateFormButtonWrap from 'components/CreateForm/ButtonWrap';
-import { updateTitle } from 'context/actions/createForm';
+import { updateTitle } from 'context/actions/formData';
 
 function CreateFormPage() {
   return (

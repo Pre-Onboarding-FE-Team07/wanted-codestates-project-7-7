@@ -1,7 +1,7 @@
 import { useContext, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { FormDataContext } from 'context/FormDataContext';
-import { addField } from 'context/actions/createForm';
+import { addField } from 'context/actions/formData';
 import Modal from './Modal';
 import { FieldListType, FieldType } from 'interfaces/createForm.d';
 

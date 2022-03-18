@@ -1,8 +1,8 @@
-import { FieldType, CreateFormStateType, CreateFormActionType } from 'interfaces/createForm.d';
+import { FieldType, FormDataStateType, FormDataActionType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
 import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD, UPDATE_TITLE } from '../actions/types';
 
-const reducer = (state: CreateFormStateType, action: CreateFormActionType): CreateFormStateType => {
+const reducer = (state: FormDataStateType, action: FormDataActionType): FormDataStateType => {
   switch (action.type) {
     case SET_FIELDS:
       return {
