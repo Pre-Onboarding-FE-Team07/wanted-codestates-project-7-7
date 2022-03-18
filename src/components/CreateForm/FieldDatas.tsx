@@ -10,7 +10,7 @@ function FieldDatas() {
   const field = useMemo(() => fieldState.field, [fieldState.field]);
   const quillRef = useRef<ReactQuill>(null);
   const [htmlContent, setHtmlContent] = useState<string>('');
-  console.log('update_fielddata');
+  console.log('update_fielddata' + field.id);
   const updateContent = useCallback(
     (content: string) => {
       setHtmlContent(content);

@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer, useMemo } from 'react';
 import { FieldContextType, FieldStateType, FieldType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
 import reducer from './reducers/field';
@@ -21,7 +21,10 @@ const FieldProvider = ({ field, children }: FieldProps) => {
     field,
     loading: false,
   });
-  const value: FieldContextType = { fieldState, fieldDispatch };
+  const value: FieldContextType = useMemo(
+    () => Object({ fieldState, fieldDispatch }),
+    [fieldState]
+  );
   return <FieldContext.Provider value={value}>{children}</FieldContext.Provider>;
 };
 

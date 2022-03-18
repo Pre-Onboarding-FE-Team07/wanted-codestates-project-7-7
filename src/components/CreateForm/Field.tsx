@@ -1,19 +1,20 @@
-import { FieldType } from 'interfaces/createForm.d';
+import { useContext } from 'react';
+import { FieldType, FormDataType } from 'interfaces/createForm.d';
 import { memo, useRef, DragEvent, MutableRefObject } from 'react';
 import styled from 'styled-components';
 import FieldDatas from './FieldDatas';
 import FieldProvider from 'context/FieldContext';
+import { CreateFormContext } from 'context/CreateFormContext';
 
 interface FiledProps {
   data: FieldType;
   startItem: MutableRefObject<number | null>;
   overItem: MutableRefObject<number | null>;
   index: number;
-  handleDragEnd: () => void;
+  onDragEnd: (formData: FormDataType) => void;
 }
-function Field({ data, startItem, overItem, index, handleDragEnd }: FiledProps) {
-  console.log(data);
-
+function Field({ data, startItem, overItem, index, onDragEnd }: FiledProps) {
+  const { state } = useContext(CreateFormContext);
   const dragRef = useRef<HTMLTableSectionElement>(null);
   const prevX = useRef<number | null>(null);
   const handleDragStart = (e: DragEvent<HTMLElement>) => {
@@ -24,7 +25,9 @@ function Field({ data, startItem, overItem, index, handleDragEnd }: FiledProps) 
   };
   const handleDragEnter = () => (overItem.current = index);
   const handleDragOver = (e: DragEvent<HTMLElement>) => e.preventDefault();
-
+  const handleDragEnd = () => {
+    onDragEnd(state.formData);
+  };
   return (
     <FieldProvider field={data}>
       <FieldWrap
