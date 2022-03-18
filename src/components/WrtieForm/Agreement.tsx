@@ -3,7 +3,7 @@ import { Form, Radio } from 'antd';
 function Agreement() {
   return (
     <Form.Item
-      name="agreement_0"
+      name="agreement"
       valuePropName="checked"
       rules={[
         {

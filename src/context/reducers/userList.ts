@@ -7,8 +7,8 @@ export default function userListReducer(
 ): UserListState {
   switch (action.type) {
     case 'CREATE':
-      const { name, phone, address, input_0, input_1, argeement_0 } = action.data;
-      return state.concat({ name, phone, address, input_0, input_1, argeement_0 });
+      const { name, phone, address, select, url, agreement } = action.data;
+      return state.concat({ name, phone, address, select, url, agreement });
     default:
       throw new Error('Unhandled action');
   }

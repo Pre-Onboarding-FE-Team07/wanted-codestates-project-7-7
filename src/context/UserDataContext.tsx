@@ -1,8 +1,12 @@
-import { userDataRead } from 'constants/user';
 import { userProps } from 'interfaces/user';
 import { createContext, Dispatch, useContext, useReducer } from 'react';
 
-const UserDataContext = createContext<userProps | undefined>(undefined);
+const UserDataContext = createContext<userProps>({
+  name: '',
+  phone: '',
+  address: '',
+  agreement: false,
+});
 
 export type UserDataState = userProps;
 export type UserDataAction = {
@@ -10,7 +14,7 @@ export type UserDataAction = {
   data: object;
 };
 type UserDataDispatch = Dispatch<UserDataAction>;
-const UserDataDispatchContext = createContext<UserDataDispatch | undefined>(undefined);
+const UserDataDispatchContext = createContext<UserDataDispatch>(() => null);
 
 export default function userDataReducer(
   state: UserDataState,
@@ -18,14 +22,19 @@ export default function userDataReducer(
 ): UserDataState {
   switch (action.type) {
     case 'SET_USER_DATA':
-      return state;
+      return { ...state, ...action.data };
     default:
       throw new Error('Unhandled action');
   }
 }
 
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const [userData, dispatch] = useReducer(userDataReducer, userDataRead);
+  const [userData, dispatch] = useReducer(userDataReducer, {
+    name: '',
+    phone: '',
+    address: '',
+    agreement: false,
+  });
 
   return (
     <UserDataDispatchContext.Provider value={dispatch}>

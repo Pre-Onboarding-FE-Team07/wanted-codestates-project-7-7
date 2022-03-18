@@ -6,7 +6,7 @@ function SelectBox() {
   const { Option } = Select;
   return (
     <Form.Item
-      name="input_0"
+      name="select"
       label="옵션1"
       hasFeedback
       rules={[

@@ -11,7 +11,7 @@ const UserListDispatchContext = createContext<UserListDispatch | undefined>(unde
 
 export const UserListProvider = ({ children }: { children: React.ReactNode }) => {
   const [userList, dispatch] = useReducer(userListReducer, userListRead);
-
+  console.log('userList', userList);
   return (
     <UserListDispatchContext.Provider value={dispatch}>
       <UserListContext.Provider value={userList}>{children}</UserListContext.Provider>
