@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import { Form } from 'antd';
 import Phone from 'components/Form/Phone';
 import PostCode from 'components/Form/PostCode';
