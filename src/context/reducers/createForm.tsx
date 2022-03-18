@@ -1,14 +1,13 @@
-import { FieldType, CreateFormType } from 'interfaces/createForm.d';
+import { FieldType, CreateFormStateType, CreateFormActionType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
-import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD } from '../actions/types';
+import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD, UPDATE_TITLE } from '../actions/types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const reducer = (state: CreateFormType, action: any) => {
+const reducer = (state: CreateFormStateType, action: CreateFormActionType): CreateFormStateType => {
   switch (action.type) {
     case SET_FIELDS:
       return {
         ...state,
-        formData: action.newFields,
+        formData: action.newFields || [],
       };
     case ADD_FIELD:
       const { formData } = state;
@@ -26,13 +25,18 @@ const reducer = (state: CreateFormType, action: any) => {
       return {
         ...state,
         formData: state.formData.map((field: FieldType) =>
-          field.id === action.field.id ? { ...field, ...action.field } : field
+          field.id === action.field?.id ? { ...field, ...action.field } : field
         ),
       };
     case DELETE_FIELD:
       return {
         ...state,
         formData: state.formData.filter((field: FieldType) => field.id !== action.fieldId),
+      };
+    case UPDATE_TITLE:
+      return {
+        ...state,
+        title: action.title || '',
       };
     default:
       return state;

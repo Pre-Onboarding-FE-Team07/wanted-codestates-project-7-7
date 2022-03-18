@@ -1,9 +1,8 @@
 import { FieldType } from 'interfaces/createForm.d';
-import { memo, useState, useRef, DragEvent, MutableRefObject } from 'react';
+import { memo, useRef, DragEvent, MutableRefObject } from 'react';
 import styled from 'styled-components';
-import FieldTools from './FieldTools';
-import TextEditor from './TextEditor';
-import ReactQuill from 'react-quill';
+import FieldDatas from './FieldDatas';
+import FieldProvider from 'context/FieldContext';
 
 interface FiledProps {
   data: FieldType;
@@ -13,10 +12,10 @@ interface FiledProps {
   handleDragEnd: () => void;
 }
 function Field({ data, startItem, overItem, index, handleDragEnd }: FiledProps) {
-  const quillRef = useRef<ReactQuill>(null);
+  console.log(data);
+
   const dragRef = useRef<HTMLTableSectionElement>(null);
   const prevX = useRef<number | null>(null);
-  const [htmlContent, setHtmlContent] = useState<string>('');
   const handleDragStart = (e: DragEvent<HTMLElement>) => {
     const dragX = e.pageX;
     prevX.current = dragX;
@@ -25,21 +24,22 @@ function Field({ data, startItem, overItem, index, handleDragEnd }: FiledProps) 
   };
   const handleDragEnter = () => (overItem.current = index);
   const handleDragOver = (e: DragEvent<HTMLElement>) => e.preventDefault();
+
   return (
-    <FieldWrap
-      ref={dragRef}
-      draggable
-      onDragStart={handleDragStart}
-      onDragEnter={handleDragEnter}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-    >
-      <FieldTools data={data} />
-      <TextEditor quillRef={quillRef} htmlContent={htmlContent} setHtmlContent={setHtmlContent} />
-    </FieldWrap>
+    <FieldProvider field={data}>
+      <FieldWrap
+        ref={dragRef}
+        draggable
+        onDragStart={handleDragStart}
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <FieldDatas />
+      </FieldWrap>
+    </FieldProvider>
   );
 }
-
 export default memo(Field);
 
 const FieldWrap = styled.section`

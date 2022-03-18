@@ -1,18 +1,22 @@
 import { createContext, useReducer } from 'react';
-import { ContextType, CreateFormType, Props } from 'interfaces/createForm.d';
+import { CreateFormStateType, Props, CreateFormContextType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
 import reducer from './reducers/createForm';
 
-const initialValue: CreateFormType = {
+const initialState: CreateFormStateType = {
   formData: [defaultField],
+  loading: false,
+  title: '',
 };
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-export const CreateFormContext = createContext<ContextType>(null!);
+export const CreateFormContext = createContext<CreateFormContextType>({
+  state: initialState,
+  dispatch: () => null,
+});
 
 const CreateFormProvider = ({ children }: Props) => {
-  const [state, dispatch] = useReducer(reducer, initialValue);
-  const value: ContextType = { state, dispatch };
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const value: CreateFormContextType = { state, dispatch };
   return <CreateFormContext.Provider value={value}>{children}</CreateFormContext.Provider>;
 };
 

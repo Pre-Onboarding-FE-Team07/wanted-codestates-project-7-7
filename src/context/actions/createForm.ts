@@ -18,3 +18,8 @@ export const deleteField = (fieldId: string) => ({
   type: DELETE_FIELD,
   fieldId,
 });
+
+export const updateTitle = (title: string) => ({
+  type: UPDATE_FIELD,
+  title,
+});

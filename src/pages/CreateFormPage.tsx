@@ -1,7 +1,9 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import FieldList from 'components/CreateForm/FieldList';
-import CreateFormProvider from 'context/CreateFormContext';
+import CreateFormProvider, { CreateFormContext } from 'context/CreateFormContext';
 import CreateFormButtonWrap from 'components/CreateForm/CreateFormButtonWrap';
+import { updateTitle } from 'context/actions/createForm';
 
 function CreateFormPage() {
   return (
@@ -9,7 +11,7 @@ function CreateFormPage() {
       <Wrap>
         <FormSection>
           <Label>제목</Label>
-          <InputTitle></InputTitle>
+          <Title />
         </FormSection>
         <FormSection>
           <Label>필드목록</Label>
@@ -19,6 +21,13 @@ function CreateFormPage() {
       </Wrap>
     </CreateFormProvider>
   );
+}
+
+function Title() {
+  const { dispatch } = useContext(CreateFormContext);
+  const handleChangeInput = (e: { target: HTMLInputElement }) =>
+    dispatch(updateTitle(e.target.value));
+  return <InputTitle onChange={handleChangeInput}></InputTitle>;
 }
 
 export default CreateFormPage;

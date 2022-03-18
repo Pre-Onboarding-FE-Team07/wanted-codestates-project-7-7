@@ -2,11 +2,11 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Option from './Option';
 import { Input } from '../FieldTools';
+import { useEffect, useContext } from 'react';
+import { FieldContext } from 'context/FieldContext';
+import { updateFieldData } from 'context/actions/field';
+import { OptionType } from 'interfaces/createForm.d';
 
-interface OptionType {
-  id: string;
-  name: string;
-}
 type Options = Array<OptionType>;
 
 let count = 0;
@@ -16,6 +16,11 @@ const isDuplicate = (arr: Options, keyword: string) =>
 function OptionList() {
   const [options, setOptions] = useState<Options>([]);
   const [input, setInput] = useState('');
+  const { fieldDispatch } = useContext(FieldContext);
+
+  useEffect(() => {
+    fieldDispatch(updateFieldData({ options }));
+  }, [options, fieldDispatch]);
 
   const handleChange = (e: { target: HTMLInputElement }) => setInput(e.target.value);
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {

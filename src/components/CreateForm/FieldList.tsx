@@ -1,4 +1,4 @@
-import { useContext, useRef, useMemo } from 'react';
+import { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import Field from './Field';
 import { FieldType } from 'interfaces/createForm.d';
@@ -7,7 +7,6 @@ import { setFields } from 'context/actions/createForm';
 
 function FieldList() {
   const { state, dispatch } = useContext(CreateFormContext);
-  const formData = useMemo(() => state?.formData, [state?.formData]);
   const startItem = useRef<number | null>(null);
   const overItem = useRef<number | null>(null);
 
@@ -15,7 +14,7 @@ function FieldList() {
     const startIndex = startItem.current;
     const endIndex = overItem.current;
     if (startIndex !== endIndex && startIndex !== null && endIndex !== null) {
-      const list = [...formData];
+      const list = [...state.formData];
       const target = list[startIndex];
       list.splice(startIndex, 1);
       list.splice(endIndex, 0, target);
@@ -29,7 +28,7 @@ function FieldList() {
   };
   return (
     <FieldListWrap>
-      {formData.map((field: FieldType, index: number) => (
+      {state.formData.map((field: FieldType, index: number) => (
         <Field
           key={field.id}
           data={field}

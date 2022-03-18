@@ -27,6 +27,6 @@ export const defaultField = Object.freeze({
   id: 'field_1',
   type: 'text',
   required: true,
-  label: '이름',
+  label: '',
   placeholder: '',
 });

@@ -1,28 +1,54 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback, useContext, useMemo } from 'react';
 import styled from 'styled-components';
 import { SelectType, OptionList, CheckBox } from './FieldTools/index';
 import { CgArrowsV, CgClose } from 'react-icons/cg';
 import { formTypes, formTextTypes } from 'constants/createForm';
-import { FormType, FieldType } from 'interfaces/createForm.d';
+import { FormType } from 'interfaces/createForm.d';
+import { FieldContext } from 'context/FieldContext';
 import { CreateFormContext } from 'context/CreateFormContext';
-import { deleteField, updateField } from 'context/actions/createForm';
+import { updateFieldData } from 'context/actions/field';
+import { deleteField } from 'context/actions/createForm';
 
-function FieldTools({ data }: { data: FieldType }) {
+function FieldTools() {
   const { dispatch } = useContext(CreateFormContext);
+  const { fieldState, fieldDispatch } = useContext(FieldContext);
+  const field = useMemo(() => fieldState.field, [fieldState.field]);
   const [formType, setFormType] = useState<FormType>(formTypes[0]);
-  const handleChange = useCallback((target: FormType) => setFormType(target), []);
-  const handleDeleteClick = () => dispatch(deleteField(data.id));
-  const handleToggleRequired = (required: boolean) => dispatch(updateField({ ...data, required }));
+  const handleInput = useCallback(
+    (e: { target: HTMLInputElement }) => {
+      const { name, value } = e.target;
+      if (name === 'label') {
+        console.log('[LABEL]');
+      } else {
+        console.log('[PLACEHOLDER]');
+      }
+      fieldDispatch(updateFieldData({ [name]: value }));
+    },
+    [fieldDispatch]
+  );
+  const handleChangeType = useCallback(
+    (target: FormType) => {
+      setFormType(target);
+      console.log('[FORM_TYPE]');
+      fieldDispatch(updateFieldData({ type: target.type, placeholder: '' }));
+    },
+    [setFormType, fieldDispatch]
+  );
+
+  const handleDeleteClick = () => dispatch(deleteField(field.id));
+  const handleToggleRequired = (required: boolean) => fieldDispatch(updateFieldData({ required }));
   return (
     <>
       <FieldToolsWrap>
-        <SelectType options={formTypes} onChange={handleChange} />
-        <Input placeholder="라벨 입력" />
+        <SelectType options={formTypes} onChange={handleChangeType} />
+        <Input name="label" onChange={handleInput} placeholder="라벨 입력" />
         <CheckBox onChange={handleToggleRequired} />
         <DragHandle className="handle" />
         <DeleteButton onClick={handleDeleteClick} />
       </FieldToolsWrap>
-      {formTextTypes.includes(formType?.type) && <Input placeholder={formType?.placeholder} />}
+      {formTextTypes.includes(formType?.type) && (
+        <Input name="placeholder" onChange={handleInput} placeholder={formType?.placeholder} />
+      )}
       {formType?.name === String('드롭다운') && <OptionList />}
     </>
   );
