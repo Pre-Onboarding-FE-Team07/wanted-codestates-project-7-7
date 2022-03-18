@@ -27,18 +27,19 @@ function File() {
       return;
     }
     if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: string) =>
-        setImg({
-          imageUrl,
-          loading: false,
-        })
-      );
+      if (info.file.originFileObj) {
+        getBase64(info.file.originFileObj, (imageUrl: string) => {
+          setImg({
+            imageUrl,
+            loading: false,
+          });
+        });
+      }
     }
   };
-  function getBase64(img: Blob, callback: (...args: any[]) => void) {
+  function getBase64(img: Blob, callback: (result: string) => void) {
     const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
+    reader.addEventListener('load', () => callback(String(reader.result)));
     reader.readAsDataURL(img);
   }
   return (
