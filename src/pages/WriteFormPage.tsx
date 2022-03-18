@@ -9,19 +9,29 @@ import Agreement from '../components/WrtieForm/Agreement';
 import { userProps } from '../interfaces/user';
 import SelectBox from '../components/WrtieForm/SelectBox';
 import Name from '../components/WrtieForm/Name';
-// import { useUserListDispatch } from 'context/UserListContext';
 import { UserDataProvider } from 'context/UserDataContext';
+import { useUserListDispatch } from 'context/UserListContext';
+import { useState } from 'react';
 
 function WriteFormPage() {
   const [form] = Form.useForm();
-  // const userListdispatch = useUserListDispatch();
-  // const userData = useUserDataState();
+  const userListDispatch = useUserListDispatch();
+  const [address, setAddress] = useState('');
+  const [url, setUrl] = useState('');
   const onFinish = (values: userProps) => {
     console.log('Success:', values);
-    // userListdispatch({
-    //   type: 'CREATE',
-    //   data: values,
-    // });
+    console.log(address, 'address');
+    userListDispatch({
+      type: 'CREATE',
+      data: {
+        name: values.name,
+        phone: values.phone,
+        address: address,
+        select: values.select,
+        url: url,
+        agreement: values.agreement,
+      },
+    });
   };
 
   return (
@@ -30,17 +40,26 @@ function WriteFormPage() {
         <Form
           form={form}
           onFinish={onFinish}
-          onFieldsChange={(_, allFields) => {
-            console.log(allFields);
-          }}
+          // onValuesChange={(allFields) => {
+          //   userDataSave(allFields);
+          //   // dispatchUserData({
+          //   //   type: 'SET_USER_DATA',
+          //   //   data: {
+          //   //     name: name,
+          //   //     phone: phone,
+          //   //     select: select,
+          //   //     agreement: agreement,
+          //   //   },
+          //   // });
+          // }}
           layout="vertical"
           autoComplete="off"
         >
           <Name />
           <Phone />
-          <PostCode />
+          <PostCode setAddress={setAddress} />
           <SelectBox />
-          <File />
+          <File setUrl={setUrl} />
           <Agreement />
           <ButtonArea>
             <Form.Item shouldUpdate>

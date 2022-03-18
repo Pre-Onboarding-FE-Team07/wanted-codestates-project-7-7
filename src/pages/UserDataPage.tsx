@@ -34,16 +34,16 @@ function UserDataPage() {
               <InputCustom value={item.address} readOnly={true} />
             </Form.Item>
             <Form.Item label="옵션1">
-              <InputCustom value={item.input_0} readOnly={true} />
+              <InputCustom value={item.select} readOnly={true} />
             </Form.Item>
             <Form.Item label="첨부파일">
               <ImgBox>
-                <ImgScreen src={item.input_1} alt="avatar" />
+                <ImgScreen src={item.url} alt="avatar" />
               </ImgBox>
             </Form.Item>
             <Form.Item valuePropName="checked">
               <ImgBox>
-                <Radio checked={item.argeement_0}>개인정보 수집 약관 동의(필수)</Radio>
+                <Radio checked={item.agreement}>개인정보 수집 약관 동의(필수)</Radio>
               </ImgBox>
             </Form.Item>
           </User>

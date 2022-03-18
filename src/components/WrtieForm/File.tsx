@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
-function File() {
+interface FileProps {
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function File({ setUrl }: FileProps) {
   const { Dragger } = Upload;
   const props = {
     name: 'file',
@@ -27,7 +32,6 @@ function File() {
       return;
     }
     if (info.file.status === 'done') {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, (imageUrl: string) => {
         setImg({
           imageUrl,
@@ -43,11 +47,15 @@ function File() {
     }
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function getBase64(img: any, callback: any) {
+  function getBase64(url: any, callback: any) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
+    reader.readAsDataURL(url);
   }
+
+  useEffect(() => {
+    setUrl(img.imageUrl);
+  }, [img.imageUrl, setUrl]);
 
   return (
     <Form.Item
