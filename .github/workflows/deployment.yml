@@ -24,7 +24,11 @@ jobs:
         run: |
           npm install
           npm install surge --global
-
+          
+      # 라우팅을 위해 index.html 파일을 복사합니다.
+      - name: Copy index.html to 200.html
+        run: cp index.html 200.html
+      
       # React 프로젝트를 빌드합니다.
       - name: Build React Application
         run: npm run build
