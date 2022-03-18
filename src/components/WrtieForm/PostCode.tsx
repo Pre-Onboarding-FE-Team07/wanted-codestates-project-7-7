@@ -1,15 +1,17 @@
 import styled from 'styled-components';
-import { Input, Form, Modal } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import React, { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
 import Btn from '../ButtonCustom';
+// import { useUserDataDispatch } from 'context/UserDataContext';
 
 function PostCode() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddress, setIsAddress] = useState('');
   const [isDetail, setIsDetail] = useState('');
+  // const dispatchUserData = useUserDataDispatch();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -17,6 +19,12 @@ function PostCode() {
   const handleComplete = (data: Address) => setIsAddress(data.address);
   const onAddress = () => {
     setIsAddress(isAddress.concat(' ').concat(isDetail));
+    // dispatchUserData({
+    //   type: 'SET_USER_DATA',
+    //   data: {
+    //     address: isAddress,
+    //   },
+    // });
     setIsModalVisible(false);
   };
 

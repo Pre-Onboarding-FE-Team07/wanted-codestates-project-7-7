@@ -1,5 +1,5 @@
+import { UserListState } from 'interfaces/user';
 import { UserListAction } from '../actions/userList';
-import { UserListState } from '../UserListContext';
 
 export default function userListReducer(
   state: UserListState,

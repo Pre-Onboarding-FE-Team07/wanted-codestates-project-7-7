@@ -48,8 +48,18 @@ function File() {
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   }
+
   return (
-    <Form.Item name="input_1" label="첨부파일">
+    <Form.Item
+      name="input_1"
+      label="첨부파일"
+      rules={[
+        {
+          required: false,
+          message: '파일을 넣어주세요!',
+        },
+      ]}
+    >
       <Dragger
         style={{ borderRadius: '1rem', padding: '2rem 1rem' }}
         {...props}
