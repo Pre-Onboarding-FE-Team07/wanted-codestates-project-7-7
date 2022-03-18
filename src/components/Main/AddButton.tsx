@@ -15,8 +15,6 @@ const CreateButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute;
-  right: 0px; */
   width: 3rem;
   height: 3rem;
   border-radius: 5px;

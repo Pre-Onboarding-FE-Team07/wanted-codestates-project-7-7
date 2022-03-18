@@ -5,6 +5,7 @@ import DropdownList from 'components/Main/DropdownList';
 import { FormListContext } from 'context/FormListContext';
 import { FormDataStateType } from 'interfaces/createForm.d';
 import { useContext, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 function FormListPage() {
   const { formListState } = useContext(FormListContext);
@@ -13,7 +14,9 @@ function FormListPage() {
     <Container>
       <Wrapper>
         <Label>최신목록</Label>
-        <AddButton />
+        <Link to="/create">
+          <AddButton />
+        </Link>
       </Wrapper>
       <FormCard>
         {formList?.map((form: FormDataStateType) => (
@@ -43,7 +46,6 @@ const Wrapper = styled.section`
   background: #ffffff;
   flex: 1;
   margin-bottom: 1rem;
-  /* border: 1px solid lightgray; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,13 +74,12 @@ const DropDownWrap = styled.div`
 `;
 
 const PageContainer = styled.footer`
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 381px;
-  left: 0px;
+  bottom: 0;
 `;
 
 export default FormListPage;
