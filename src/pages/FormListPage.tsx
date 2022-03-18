@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Pagination } from 'antd';
 import AddButton from 'components/Main/AddButton';
 import { RiFileListLine, RiFile2Line } from 'react-icons/ri';
-
+import { Empty } from 'antd';
 import { FormListContext } from 'context/FormListContext';
 import { FormDataStateType } from 'interfaces/createForm.d';
 import { useContext, useMemo } from 'react';
@@ -35,7 +35,7 @@ function FormListPage() {
             </IconWrap>
           </FormItem>
         ))}
-        {formList.length <= 0 ? <p>+ 버튼을 눌러 폼을 작성해주세요</p> : null}
+        {formList.length <= 0 ? <Empty>+ 버튼을 눌러 폼을 작성해주세요</Empty> : null}
       </FormCard>
       <PageContainer>
         <Pagination defaultCurrent={1} total={50} />
