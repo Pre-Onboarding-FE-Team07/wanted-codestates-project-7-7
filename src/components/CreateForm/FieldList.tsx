@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Field from './Field';
 import { FieldType } from 'interfaces/createForm.d';
 import { FormDataContext } from 'context/FormDataContext';
-import { setFields } from 'context/actions/createForm';
+import { setFields } from 'context/actions/formData';
 
 function FieldList() {
   const { state, dispatch } = useContext(FormDataContext);

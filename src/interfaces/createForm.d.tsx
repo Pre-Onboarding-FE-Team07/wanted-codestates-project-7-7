@@ -29,7 +29,7 @@ export interface Props {
   children: ReactNode;
 }
 
-export interface CreateFormActionType {
+export interface FormDataActionType {
   type: string;
   newFields?: FieldListType;
   field?: FieldType;
@@ -37,14 +37,14 @@ export interface CreateFormActionType {
   title?: string;
 }
 
-export interface CreateFormStateType {
+export interface FormDataStateType {
   fieldList: FieldListType;
   title: string;
 }
 
 export interface FormDataContextType {
-  state: CreateFormStateType;
-  dispatch: Dispatch<CreateFormActionType>;
+  state: FormDataStateType;
+  dispatch: Dispatch<FormDataActionType>;
 }
 
 export interface FieldStateType {
