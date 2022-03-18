@@ -7,26 +7,57 @@ export interface FormType {
   placeholder?: string;
 }
 
+export interface OptionType {
+  id: string;
+  name: string;
+}
+
 export interface FieldType {
   id: string;
   type: string;
   label: string;
   required: boolean;
   placeholder?: string;
-  options?: Array<string>;
+  options?: Array<OptionType>;
   description?: string;
   contents?: string;
 }
+
+export type FieldListType = FieldType[];
 
 export interface Props {
   children: ReactNode;
 }
 
-export interface CreateFormType {
-  formData: FieldType[];
+export interface FormDataActionType {
+  type: string;
+  newFields?: FieldListType;
+  field?: FieldType;
+  fieldId?: string;
+  title?: string;
 }
 
-export interface ContextType {
-  state: CreateFormType;
-  dispatch: Dispatch<{ type: string; value?: unknown }>;
+export interface FormDataStateType {
+  fieldList: FieldListType;
+  title: string;
+}
+
+export interface FormDataContextType {
+  state: FormDataStateType;
+  dispatch: Dispatch<FormDataActionType>;
+}
+
+export interface FieldStateType {
+  field: FieldType;
+}
+
+export interface FieldActionType {
+  type: string;
+  field?: FieldType;
+  data?: object;
+}
+
+export interface FieldContextType {
+  fieldState: FieldStateType;
+  fieldDispatch: Dispatch<FieldActionType>;
 }

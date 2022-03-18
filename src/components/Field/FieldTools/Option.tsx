@@ -2,15 +2,14 @@ import styled from 'styled-components';
 import { RiCloseLine } from 'react-icons/ri';
 import { rgba } from 'polished';
 
-interface OptionProps {
-  id: string;
+interface OptionType {
+  id: number;
   name: string;
-  onClick: (id: string) => void;
 }
 
-function Option({ id, name, onClick }: OptionProps) {
+function Option({ id, name }: OptionType) {
   return (
-    <OptionWrap onClick={() => onClick(id)}>
+    <OptionWrap>
       {name}
       <RiCloseLine />
     </OptionWrap>
@@ -26,7 +25,7 @@ const OptionWrap = styled.button`
   align-items: center;
   justify-content: center;
   padding: 0 0.2rem 0 0.6rem;
-  height: calc(40px - 0.8rem);
+  height: 100%;
   color: ${({ theme }) => theme.color.blue};
   border-color: ${({ theme }) => theme.color.blue};
   background-color: ${({ theme }) => rgba(theme.color.blue, 0.1)};

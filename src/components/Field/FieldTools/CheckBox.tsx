@@ -1,19 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-interface CheckboxProps {
-  onChange: (checked: boolean) => void;
-}
-
-function Checkbox({ onChange }: CheckboxProps) {
-  const [checked, setChecked] = useState(true);
-  const handleChange = () => {
-    setChecked(!checked);
-    onChange(!checked);
-  };
+function Checkbox() {
   return (
     <CheckboxWrap>
-      <input type="checkbox" checked={checked} onChange={handleChange} />
+      <input type="checkbox" checked />
       <span>필수</span>
     </CheckboxWrap>
   );

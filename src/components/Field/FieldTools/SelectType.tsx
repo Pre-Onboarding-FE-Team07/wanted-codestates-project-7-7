@@ -1,47 +1,36 @@
-import { memo } from 'react';
 import styled from 'styled-components';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { FormType } from 'interfaces/createForm.d';
 
-interface Options {
-  options: readonly FormType[];
-  onChange: (target: FormType) => void;
-}
-
-function SelectType({ options, onChange }: Options) {
-  const handleChangeOption = (e: { target: HTMLSelectElement }) =>
-    onChange(options[Number(e.target.value)]);
+function SelectType() {
   return (
     <SelectWrap>
-      <Select onChange={handleChangeOption}>
-        {options.map(({ name }, index) => (
-          <option key={name} value={index}>
-            {name}
-          </option>
-        ))}
+      <Select>
+        <Option>1</Option>
+        <Option>2</Option>
+        <Option>3</Option>
       </Select>
       <Arrow />
     </SelectWrap>
   );
 }
 
-export default memo(SelectType);
+export default SelectType;
 const SelectWrap = styled.div`
   position: relative;
   display: flex;
   min-width: 140px;
   flex: 1;
   border-right: 1px solid lightgray;
-  ${({ theme }) => theme.createForm`
+  @media (max-width: 500px) {
     min-width: 100%;
     border-right: 0;
-  `}
+  }
 `;
 const Select = styled.select`
   width: 100%;
   height: 100%;
   border: none;
-  padding: 0.4rem 1rem;
+  padding: 0.8rem 1rem;
   appearance: none;
   padding-right: 28px;
   background-color: transparent;
@@ -55,3 +44,4 @@ const Arrow = styled(MdOutlineKeyboardArrowDown)`
   margin-left: -28px;
   align-self: center;
 `;
+const Option = styled.option``;
