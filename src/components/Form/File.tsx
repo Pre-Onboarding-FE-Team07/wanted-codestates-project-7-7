@@ -36,7 +36,7 @@ function File() {
       );
     }
   };
-  function getBase64(img: any, callback: any) {
+  function getBase64(img: Blob, callback: (...args: any[]) => void) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
