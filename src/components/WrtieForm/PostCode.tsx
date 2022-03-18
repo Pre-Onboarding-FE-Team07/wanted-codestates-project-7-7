@@ -4,12 +4,14 @@ import 'antd/dist/antd.min.css';
 import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
-import Btn from '../Btn';
+import Btn from '../ButtonCustom';
+// import { useUserDataDispatch } from 'context/UserDataContext';
 
 function PostCode() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddress, setIsAddress] = useState('');
   const [isDetail, setIsDetail] = useState('');
+  // const dispatchUserData = useUserDataDispatch();
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -17,8 +19,15 @@ function PostCode() {
   const handleComplete = (data: Address) => setIsAddress(data.address);
   const onAddress = () => {
     setIsAddress(isAddress.concat(' ').concat(isDetail));
+    // dispatchUserData({
+    //   type: 'SET_USER_DATA',
+    //   data: {
+    //     address: isAddress,
+    //   },
+    // });
     setIsModalVisible(false);
   };
+
   const isOrNotAddress = () => {
     if (isAddress.length === 0) {
       return Promise.reject(new Error('주소를 입력해주세요!'));
@@ -28,28 +37,30 @@ function PostCode() {
   };
 
   return (
-    <Form.Item
-      name="address"
-      label="배송지"
-      rules={[
-        {
-          required: true,
-          validator: isOrNotAddress,
-        },
-      ]}
-    >
-      <InputAddress onClick={showModal} value={isAddress} />
+    <div>
+      <Form.Item
+        name="address"
+        label="배송지"
+        rules={[
+          {
+            required: true,
+            validator: isOrNotAddress,
+          },
+        ]}
+      >
+        <InputAddress onClick={showModal} value={isAddress} />
+      </Form.Item>
       <Modal
-        title={[
+        title={
           isAddress.length > 0 ? (
-            <>
+            <div>
               <FiChevronLeft onClick={() => setIsAddress('')} />
               <span>&nbsp; 배송주소</span>
-            </>
+            </div>
           ) : (
             <p>배송주소</p>
-          ),
-        ]}
+          )
+        }
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
@@ -63,13 +74,13 @@ function PostCode() {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsDetail(e.target.value)}
               value={isDetail}
             />
-            <Btn type="primary" onClick={onAddress}>
+            <Btn type="primary" onClick={onAddress} htmlType="button">
               입력완료
             </Btn>
           </>
         )}
       </Modal>
-    </Form.Item>
+    </div>
   );
 }
 
