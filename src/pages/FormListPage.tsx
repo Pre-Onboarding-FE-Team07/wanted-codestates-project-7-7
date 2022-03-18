@@ -4,20 +4,21 @@ import AddButton from 'components/Main/AddButton';
 import FormList from 'components/Main/FormList';
 
 function FormListPage() {
-  const forms = [{ id: 1 }];
   return (
+    // <FormListProvider>
     <Container>
       <Wrapper>
         <Label>최신목록</Label>
         <AddButton />
       </Wrapper>
       <FormCard>
-        <FormList forms={forms} />
+        <FormList />
       </FormCard>
       <PageContainer>
         <Pagination defaultCurrent={1} total={50} />
       </PageContainer>
     </Container>
+    // </FormListProvider>
   );
 }
 

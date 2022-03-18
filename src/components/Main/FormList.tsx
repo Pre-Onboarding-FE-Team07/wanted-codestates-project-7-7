@@ -1,19 +1,24 @@
 import FormItem from 'antd/lib/form/FormItem';
 import styled from 'styled-components';
 
-interface FormListProps {
-  forms: FormDataProps[];
-}
+const forms = [
+  {
+    id: 1,
+    text: 'Context Api 배우기',
+    done: true,
+  },
+  {
+    id: 2,
+    text: 'TypeScript 배우기',
+    done: true,
+  },
+];
 
-interface FormDataProps {
-  id: number;
-}
-
-function FormList({ forms }: FormListProps) {
+function FormList() {
   return (
     <FormItemContainer>
-      {forms.map((formData: FormDataProps) => (
-        <FormItem key={formData.id}></FormItem>
+      {forms.map((form) => (
+        <FormItem key={form.id}></FormItem>
       ))}
     </FormItemContainer>
   );
