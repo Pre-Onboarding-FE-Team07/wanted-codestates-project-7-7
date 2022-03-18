@@ -5,26 +5,23 @@ import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
 import Btn from '../ButtonCustom';
-// import { useUserDataDispatch } from 'context/UserDataContext';
+interface PostCodeProps {
+  setAddress: React.Dispatch<React.SetStateAction<string>>;
+}
 
-function PostCode() {
+function PostCode({ setAddress }: PostCodeProps) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddress, setIsAddress] = useState('');
   const [isDetail, setIsDetail] = useState('');
-  // const dispatchUserData = useUserDataDispatch();
 
   const showModal = () => {
     setIsModalVisible(true);
   };
+
   const handleComplete = (data: Address) => setIsAddress(data.address);
   const onAddress = () => {
-    setIsAddress(isAddress.concat(' ').concat(isDetail));
-    // dispatchUserData({
-    //   type: 'SET_USER_DATA',
-    //   data: {
-    //     address: isAddress,
-    //   },
-    // });
+    setIsAddress(isAddress);
+    setAddress(isAddress.concat(' ').concat(isDetail));
     setIsModalVisible(false);
   };
 
@@ -48,7 +45,7 @@ function PostCode() {
           },
         ]}
       >
-        <InputAddress onClick={showModal} value={isAddress} />
+        <InputAddress onClick={showModal} value={isAddress + ' ' + isDetail} />
       </Form.Item>
       <Modal
         title={

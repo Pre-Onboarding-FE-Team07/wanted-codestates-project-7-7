@@ -4,8 +4,13 @@ import styled from 'styled-components';
 import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
-function File() {
+interface FileProps {
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function File({ setUrl }: FileProps) {
   const { Dragger } = Upload;
   const props = {
     name: 'file',
@@ -36,17 +41,22 @@ function File() {
         });
       }
     }
+    function getBase64(img: Blob, callback: (result: string) => void) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => callback(String(reader.result)));
+      reader.readAsDataURL(img);
+    }
   };
-  function getBase64(img: Blob, callback: (result: string) => void) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(String(reader.result)));
-    reader.readAsDataURL(img);
-  }
+
+  useEffect(() => {
+    setUrl(img.imageUrl);
+  }, [img.imageUrl, setUrl]);
 
   return (
     <Form.Item
       name="input_1"
       label="첨부파일"
+      valuePropName="fileList"
       rules={[
         {
           required: false,
