@@ -5,14 +5,14 @@ function DropdownList() {
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <a target="_blank" rel="noopener noreferrer" href="#">
+        {/* <a target="_blank" rel="noopener noreferrer" href="#">
           데이터 목록
-        </a>
+        </a> */}
       </Menu.Item>
       <Menu.Item key="1">
-        <a target="_blank" rel="noopener noreferrer" href="#">
+        {/* <a target="_blank" rel="noopener noreferrer" href="#">
           생성된 폼
-        </a>
+        </a> */}
       </Menu.Item>
     </Menu>
   );
