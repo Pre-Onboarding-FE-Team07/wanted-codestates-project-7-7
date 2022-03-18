@@ -4,8 +4,9 @@ import { defaultField } from 'constants/createForm';
 import reducer from './reducers/formData';
 
 const initialState: FormDataStateType = {
-  fieldList: [defaultField],
+  id: '',
   title: '',
+  fieldList: [defaultField],
 };
 
 export const FormDataContext = createContext<FormDataContextType>({

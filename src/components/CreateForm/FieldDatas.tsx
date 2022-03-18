@@ -13,6 +13,7 @@ function FieldDatas() {
   const field = useMemo(() => fieldState.field, [fieldState.field]);
   const quillRef = useRef<ReactQuill>(null);
   const [htmlContent, setHtmlContent] = useState<string>('');
+
   const updateContent = useCallback(
     (content: string) => {
       const key = field.type === 'file' ? 'description' : 'contents';
