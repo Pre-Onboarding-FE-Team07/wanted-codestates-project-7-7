@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import { Form, Pagination, Radio } from 'antd';
 import styled from 'styled-components';
 import { useUserListState } from 'context/UserListContext';
