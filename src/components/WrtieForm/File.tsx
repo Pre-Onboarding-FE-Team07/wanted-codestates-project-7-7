@@ -32,26 +32,21 @@ function File({ setUrl }: FileProps) {
       return;
     }
     if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj, (imageUrl: string) => {
-        setImg({
-          imageUrl,
-          loading: false,
+      if (info.file.originFileObj) {
+        getBase64(info.file.originFileObj, (imageUrl: string) => {
+          setImg({
+            imageUrl,
+            loading: false,
+          });
         });
-      });
+      }
     }
-    if (info.file.status === 'removed') {
-      setImg({
-        imageUrl: '',
-        loading: false,
-      });
+    function getBase64(img: Blob, callback: (result: string) => void) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => callback(String(reader.result)));
+      reader.readAsDataURL(img);
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function getBase64(url: any, callback: any) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(url);
-  }
 
   useEffect(() => {
     setUrl(img.imageUrl);

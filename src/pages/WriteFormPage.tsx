@@ -19,8 +19,6 @@ function WriteFormPage() {
   const [address, setAddress] = useState('');
   const [url, setUrl] = useState('');
   const onFinish = (values: userProps) => {
-    console.log('Success:', values);
-    console.log(address, 'address');
     userListDispatch({
       type: 'CREATE',
       data: {
