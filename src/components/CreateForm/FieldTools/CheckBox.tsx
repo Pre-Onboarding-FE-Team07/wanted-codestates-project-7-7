@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface CheckboxProps {
@@ -7,10 +7,10 @@ interface CheckboxProps {
 
 function Checkbox({ onChange }: CheckboxProps) {
   const [checked, setChecked] = useState(true);
-  const handleChange = () => setChecked(!checked);
-  useEffect(() => {
-    onChange(checked);
-  }, [checked]);
+  const handleChange = () => {
+    setChecked(!checked);
+    onChange(!checked);
+  };
   return (
     <CheckboxWrap>
       <input type="checkbox" checked={checked} onChange={handleChange} />

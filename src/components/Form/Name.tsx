@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Input, Form } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 function Name() {
   return (
