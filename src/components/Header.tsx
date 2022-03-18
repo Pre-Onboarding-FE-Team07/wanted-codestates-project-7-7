@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   title?: string;
 }
 
 function Header({ title = 'datable' }: HeaderProps) {
-  return <HeaderWrap>{title}</HeaderWrap>;
+  const navigate = useNavigate();
+
+  return <HeaderWrap onClick={() => navigate('/')}>{title}</HeaderWrap>;
 }
 
 export default Header;
@@ -20,4 +23,5 @@ const HeaderWrap = styled.header`
   text-align: center;
   justify-content: center;
   font-size: 2rem;
+  cursor: pointer;
 `;

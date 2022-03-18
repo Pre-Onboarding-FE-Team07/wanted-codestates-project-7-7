@@ -27,25 +27,37 @@ function File() {
       return;
     }
     if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl: string) =>
-        setImg({
-          imageUrl,
-          loading: false,
-        })
-      );
+      if (info.file.originFileObj) {
+        getBase64(info.file.originFileObj, (imageUrl: string) => {
+          setImg({
+            imageUrl,
+            loading: false,
+          });
+        });
+      }
     }
   };
-  function getBase64(img: any, callback: any) {
+  function getBase64(img: Blob, callback: (result: string) => void) {
     const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
+    reader.addEventListener('load', () => callback(String(reader.result)));
     reader.readAsDataURL(img);
   }
+
   return (
-    <Form.Item name="input_1" label="첨부파일">
+    <Form.Item
+      name="input_1"
+      label="첨부파일"
+      rules={[
+        {
+          required: false,
+          message: '파일을 넣어주세요!',
+        },
+      ]}
+    >
       <Dragger
         style={{ borderRadius: '1rem', padding: '2rem 1rem' }}
         {...props}
+        maxCount={1}
         onChange={(info: UploadChangeParam<UploadFile<unknown>>) => handleChange(info)}
       >
         {img.imageUrl ? (

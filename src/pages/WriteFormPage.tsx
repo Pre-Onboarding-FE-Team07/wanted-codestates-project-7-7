@@ -1,42 +1,60 @@
 import styled from 'styled-components';
 import 'antd/dist/antd.min.css';
 import { Form } from 'antd';
-import Phone from 'components/Form/Phone';
-import PostCode from 'components/Form/PostCode';
-import File from 'components/Form/File';
-import Btn from 'components/Btn';
-import Agreement from 'components/Form/Agreement';
-import { userProps } from 'interfaces/user.d';
-import SelectBox from 'components/Form/SelectBox';
-import Name from 'components/Form/Name';
+import Phone from '../components/WrtieForm/Phone';
+import PostCode from '../components/WrtieForm/PostCode';
+import File from '../components/WrtieForm/File';
+import Btn from '../components/ButtonCustom';
+import Agreement from '../components/WrtieForm/Agreement';
+import { userProps } from '../interfaces/user';
+import SelectBox from '../components/WrtieForm/SelectBox';
+import Name from '../components/WrtieForm/Name';
+// import { useUserListDispatch } from 'context/UserListContext';
+import { UserDataProvider } from 'context/UserDataContext';
 
 function WriteFormPage() {
   const [form] = Form.useForm();
-
+  // const userListdispatch = useUserListDispatch();
+  // const userData = useUserDataState();
   const onFinish = (values: userProps) => {
-    values.address = '주소';
     console.log('Success:', values);
+    // userListdispatch({
+    //   type: 'CREATE',
+    //   data: values,
+    // });
   };
 
   return (
-    <Write>
-      <Form form={form} onFinish={onFinish} layout="vertical" autoComplete="off">
-        <Name />
-        <Phone />
-        <PostCode />
-        <SelectBox />
-        <File />
-        <Agreement />
-        <ButtonArea>
-          <Form.Item>
-            <Btn type="primary" htmlType="submit">
-              제출하기
-            </Btn>
-          </Form.Item>
-          <Btn>취소하기</Btn>
-        </ButtonArea>
-      </Form>
-    </Write>
+    <UserDataProvider>
+      <Write>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          onFieldsChange={(_, allFields) => {
+            console.log(allFields);
+          }}
+          layout="vertical"
+          autoComplete="off"
+        >
+          <Name />
+          <Phone />
+          <PostCode />
+          <SelectBox />
+          <File />
+          <Agreement />
+          <ButtonArea>
+            <Form.Item shouldUpdate>
+              {() => (
+                <Btn type="primary" htmlType="submit">
+                  제출하기
+                </Btn>
+              )}
+            </Form.Item>
+            <Btn>취소하기</Btn>
+          </ButtonArea>
+        </Form>
+      </Write>
+    </UserDataProvider>
   );
 }
 

@@ -1,26 +1,61 @@
 import 'antd/dist/antd.min.css';
-import { Form, Pagination } from 'antd';
-import Name from 'components/Form/Name';
-import Phone from 'components/Form/Phone';
-import PostCode from 'components/Form/PostCode';
-import SelectBox from 'components/Form/SelectBox';
+import { Form, Pagination, Radio } from 'antd';
 import styled from 'styled-components';
-import Image from 'components/Form/Image';
-import Agreement from 'components/Form/Agreement';
+import { useUserListState } from 'context/UserListContext';
+import InputCustom from 'components/InputCustom';
+import { useState } from 'react';
 
 function UserDataPage() {
+  const user = useUserListState();
+  const defaultPage = {
+    min: 0,
+    max: 1,
+  };
+  const [current, setCurrent] = useState(defaultPage);
+  const onChangePage = (page: number) => {
+    window.scrollTo(0, 0);
+    setCurrent({
+      min: page - 1,
+      max: page,
+    });
+  };
   return (
-    <User>
-      <Form layout="vertical">
-        <Name />
-        <Phone />
-        <PostCode />
-        <SelectBox />
-        <Image />
-        <Agreement />
-        <Pagination style={{ textAlign: 'center' }} />
-      </Form>
-    </User>
+    <Form layout="vertical">
+      {user &&
+        user.slice(current.min, current.max).map((item, idx) => (
+          <User key={idx}>
+            <Form.Item label="이름">
+              <InputCustom value={item.name} readOnly={true} />
+            </Form.Item>
+            <Form.Item label="휴대폰 번호">
+              <InputCustom value={item.phone} readOnly={true} />
+            </Form.Item>
+            <Form.Item label="배송지">
+              <InputCustom value={item.address} readOnly={true} />
+            </Form.Item>
+            <Form.Item label="옵션1">
+              <InputCustom value={item.input_0} readOnly={true} />
+            </Form.Item>
+            <Form.Item label="첨부파일">
+              <ImgBox>
+                <ImgScreen src={item.input_1} alt="avatar" />
+              </ImgBox>
+            </Form.Item>
+            <Form.Item valuePropName="checked">
+              <ImgBox>
+                <Radio checked={item.argeement_0}>개인정보 수집 약관 동의(필수)</Radio>
+              </ImgBox>
+            </Form.Item>
+          </User>
+        ))}
+      <Pagination
+        simple
+        defaultCurrent={1}
+        total={user.length * 10}
+        onChange={(page) => onChangePage(page)}
+        style={{ textAlign: 'right', padding: '2rem' }}
+      />
+    </Form>
   );
 }
 
@@ -28,4 +63,15 @@ export default UserDataPage;
 
 const User = styled.div`
   margin: 2rem;
+`;
+
+const ImgScreen = styled.img`
+  width: 100%;
+`;
+
+const ImgBox = styled.div`
+  background: ${(props) => props.theme.color.lightGray};
+  border-radius: 1rem;
+  border: 0;
+  padding: 1.2rem;
 `;
