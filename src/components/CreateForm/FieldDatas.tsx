@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import { FieldContext } from 'context/FieldContext';
 import { FormDataContext } from 'context/FormDataContext';
 import { updateFieldData } from 'context/actions/field';
-import { updateField } from 'context/actions/createForm';
+import { updateField } from 'context/actions/formData';
 
 function FieldDatas() {
   const { dispatch } = useContext(FormDataContext);

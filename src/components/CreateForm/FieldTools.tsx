@@ -7,7 +7,7 @@ import { FormType } from 'interfaces/createForm.d';
 import { FieldContext } from 'context/FieldContext';
 import { FormDataContext } from 'context/FormDataContext';
 import { updateFieldData } from 'context/actions/field';
-import { deleteField } from 'context/actions/createForm';
+import { deleteField } from 'context/actions/formData';
 
 function FieldTools() {
   const { dispatch } = useContext(FormDataContext);

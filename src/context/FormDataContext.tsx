@@ -1,9 +1,9 @@
 import { createContext, useReducer, useMemo } from 'react';
-import { CreateFormStateType, Props, FormDataContextType } from 'interfaces/createForm.d';
+import { FormDataStateType, Props, FormDataContextType } from 'interfaces/createForm.d';
 import { defaultField } from 'constants/createForm';
-import reducer from './reducers/createForm';
+import reducer from './reducers/formData';
 
-const initialState: CreateFormStateType = {
+const initialState: FormDataStateType = {
   fieldList: [defaultField],
   title: '',
 };
@@ -13,10 +13,10 @@ export const FormDataContext = createContext<FormDataContextType>({
   dispatch: () => null,
 });
 
-const CreateFormProvider = ({ children }: Props) => {
+const FormDataProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value: FormDataContextType = useMemo(() => Object({ state, dispatch }), [state]);
   return <FormDataContext.Provider value={value}>{children}</FormDataContext.Provider>;
 };
 
-export default CreateFormProvider;
+export default FormDataProvider;
