@@ -41,7 +41,7 @@ const Select = styled.select`
   width: 100%;
   height: 100%;
   border: none;
-  padding: 0.8rem 1rem;
+  padding: 0.4rem 1rem;
   appearance: none;
   padding-right: 28px;
   background-color: transparent;
