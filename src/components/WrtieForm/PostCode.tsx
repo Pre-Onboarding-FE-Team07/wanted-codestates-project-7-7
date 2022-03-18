@@ -46,37 +46,37 @@ function PostCode({ setAddress }: PostCodeProps) {
         ]}
       >
         <InputAddress onClick={showModal} value={isAddress + ' ' + isDetail} />
-        <Modal
-          title={
-            isAddress.length > 0 ? (
-              <div>
-                <FiChevronLeft onClick={() => setIsAddress('')} />
-                <span>&nbsp; 배송주소</span>
-              </div>
-            ) : (
-              <p>배송주소</p>
-            )
-          }
-          visible={isModalVisible}
-          onCancel={() => setIsModalVisible(false)}
-          footer={null}
-        >
-          {isAddress.length === 0 && <DaumPostcode onComplete={handleComplete} />}
-          {isAddress.length > 0 && (
-            <>
-              <PrintAddress>{isAddress}</PrintAddress>
-              <InputAddress
-                placeholder="상세주소를 입력해주세요"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsDetail(e.target.value)}
-                value={isDetail}
-              />
-              <Btn type="primary" onClick={onAddress} htmlType="button">
-                입력완료
-              </Btn>
-            </>
-          )}
-        </Modal>
       </Form.Item>
+      <Modal
+        title={
+          isAddress.length > 0 ? (
+            <div>
+              <FiChevronLeft onClick={() => setIsAddress('')} />
+              <span>&nbsp; 배송주소</span>
+            </div>
+          ) : (
+            <p>배송주소</p>
+          )
+        }
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        {isAddress.length === 0 && <DaumPostcode onComplete={handleComplete} />}
+        {isAddress.length > 0 && (
+          <>
+            <PrintAddress>{isAddress}</PrintAddress>
+            <InputAddress
+              placeholder="상세주소를 입력해주세요"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setIsDetail(e.target.value)}
+              value={isDetail}
+            />
+            <Btn type="primary" onClick={onAddress} htmlType="button">
+              입력완료
+            </Btn>
+          </>
+        )}
+      </Modal>
     </div>
   );
 }

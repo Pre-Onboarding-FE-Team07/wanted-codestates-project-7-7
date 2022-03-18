@@ -18,8 +18,8 @@ function App() {
             <Routes>
               <Route path="/" element={<FormListPage />} />
               <Route path="/create" element={<CreateFormPage />} />
-              <Route path="/write" element={<WriteFormPage />} />
-              <Route path="/userdata" element={<UserDataPage />} />
+              <Route path="/write/:id" element={<WriteFormPage />} />
+              <Route path="/userdata/:id" element={<UserDataPage />} />
             </Routes>
           </Router>
         </UserListProvider>
