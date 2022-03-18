@@ -19,7 +19,7 @@ function OptionList() {
   const { fieldDispatch } = useContext(FieldContext);
 
   useEffect(() => {
-    fieldDispatch(updateFieldData({ options }));
+    fieldDispatch(updateFieldData({ options: options.map((key) => key.name) }));
   }, [options, fieldDispatch]);
 
   const handleChange = (e: { target: HTMLInputElement }) => setInput(e.target.value);

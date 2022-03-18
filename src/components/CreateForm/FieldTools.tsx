@@ -17,11 +17,6 @@ function FieldTools() {
   const handleInput = useCallback(
     (e: { target: HTMLInputElement }) => {
       const { name, value } = e.target;
-      if (name === 'label') {
-        console.log('[LABEL]');
-      } else {
-        console.log('[PLACEHOLDER]');
-      }
       fieldDispatch(updateFieldData({ [name]: value }));
     },
     [fieldDispatch]
@@ -29,7 +24,6 @@ function FieldTools() {
   const handleChangeType = useCallback(
     (target: FormType) => {
       setFormType(target);
-      console.log('[FORM_TYPE]');
       fieldDispatch(updateFieldData({ type: target.type, placeholder: '' }));
     },
     [setFormType, fieldDispatch]

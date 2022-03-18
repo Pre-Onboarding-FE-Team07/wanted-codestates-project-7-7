@@ -3,12 +3,11 @@ import styled, { css } from 'styled-components';
 import { CreateFormContext } from 'context/CreateFormContext';
 import { addField } from 'context/actions/createForm';
 import Modal from './Modal';
-import { FieldType } from 'interfaces/createForm.d';
+import { FormDataType, FieldType } from 'interfaces/createForm.d';
 
-const checkAllInput = (formData: FieldType[]) => {
+const checkEmptyMustInput = (formData: FormDataType) => {
   return formData.some((field: FieldType) => {
-    console.log(field.label);
-    return (field.label && field.label === '') || (field.options && field.options.length === 0);
+    return field.label === '' || (field.options ? field.options.length === 0 : false);
   });
 };
 function CreateFormButtonWrap() {
@@ -16,12 +15,20 @@ function CreateFormButtonWrap() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const handleAddClick = () => dispatch(addField());
   const handleSaveClick = () => {
-    if (checkAllInput(state.formData)) {
-      alert('작성하지 않은 항목이 있습니다!');
+    if (state.formData.length === 0) {
+      alert('적어도 하나 이상의 필드를 추가해주세요.');
+      return;
     }
-    console.log(
-      '제목 입력했나 체크, 필드목록에 빈값있나 체크, 적어도 하나의 필드목록을 생성하셔야 합니다.'
-    );
+    if (state.title === '') {
+      alert('제목을 작성해주세요.');
+      return;
+    }
+    if (checkEmptyMustInput(state.formData)) {
+      alert('작성하지 않은 항목이 있습니다.');
+      return;
+    }
+    console.log(state);
+    //context에 저장하기
   };
   const toggleModal = useCallback(
     () => setIsModalOpen((isModalOpen) => !isModalOpen),

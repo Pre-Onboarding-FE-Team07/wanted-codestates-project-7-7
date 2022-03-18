@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import FieldList from 'components/CreateForm/FieldList';
 import CreateFormProvider, { CreateFormContext } from 'context/CreateFormContext';
-import CreateFormButtonWrap from 'components/CreateForm/CreateFormButtonWrap';
+import CreateFormButtonWrap from 'components/CreateForm/ButtonWrap';
 import { updateTitle } from 'context/actions/createForm';
 
 function CreateFormPage() {

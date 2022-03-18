@@ -1,4 +1,4 @@
-import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD } from './types';
+import { SET_FIELDS, ADD_FIELD, UPDATE_FIELD, DELETE_FIELD, UPDATE_TITLE } from './types';
 import { FieldType } from 'interfaces/createForm.d';
 
 export const setFields = (newFields: FieldType[]) => ({
@@ -20,6 +20,6 @@ export const deleteField = (fieldId: string) => ({
 });
 
 export const updateTitle = (title: string) => ({
-  type: UPDATE_FIELD,
+  type: UPDATE_TITLE,
   title,
 });

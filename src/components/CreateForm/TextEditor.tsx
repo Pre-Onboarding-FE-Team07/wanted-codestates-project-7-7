@@ -9,7 +9,6 @@ interface EditorProps {
   setHtmlContent: (content: string) => void;
 }
 function TextEditor({ quillRef, htmlContent, setHtmlContent }: EditorProps) {
-  console.log('editor');
   const modules = useMemo(
     () => ({
       toolbar: {
