@@ -1,10 +1,13 @@
 import { useContext, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { FormDataContext } from 'context/FormDataContext';
+import { FormListContext } from 'context/FormListContext';
 import { addField } from 'context/actions/formData';
+import { addForm } from 'context/actions/formList';
 import Modal from './Modal';
 import { FieldListType, FieldType } from 'interfaces/createForm.d';
 import Toast from 'utils/toast';
+import { useNavigate } from 'react-router-dom';
 
 const checkEmptyMustInput = (fieldList: FieldListType) => {
   return fieldList.some((field: FieldType) => {
@@ -12,6 +15,8 @@ const checkEmptyMustInput = (fieldList: FieldListType) => {
   });
 };
 function CreateFormButtonWrap() {
+  const navigate = useNavigate();
+  const { formListDispatch } = useContext(FormListContext);
   const { state, dispatch } = useContext(FormDataContext);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const handleAddClick = () => dispatch(addField());
@@ -28,8 +33,9 @@ function CreateFormButtonWrap() {
       Toast('warning', '작성하지 않은 항목이 있습니다.');
       return;
     }
-    console.log(state);
-    //context에 저장하기
+    formListDispatch(addForm(state));
+    Toast('ok', '저장되었습니다.');
+    navigate('/');
   };
   const toggleModal = useCallback(
     () => setIsModalOpen((isModalOpen) => !isModalOpen),
