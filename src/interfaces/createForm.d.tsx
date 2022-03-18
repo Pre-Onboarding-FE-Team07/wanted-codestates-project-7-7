@@ -39,7 +39,6 @@ export interface CreateFormActionType {
 
 export interface CreateFormStateType {
   formData: FormDataType;
-  loading: boolean;
   title: string;
 }
 
@@ -50,7 +49,6 @@ export interface CreateFormContextType {
 
 export interface FieldStateType {
   field: FieldType;
-  loading: boolean;
 }
 
 export interface FieldActionType {

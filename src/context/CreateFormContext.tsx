@@ -5,7 +5,6 @@ import reducer from './reducers/createForm';
 
 const initialState: CreateFormStateType = {
   formData: [defaultField],
-  loading: false,
   title: '',
 };
 

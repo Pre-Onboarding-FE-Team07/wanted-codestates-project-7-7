@@ -5,7 +5,6 @@ import reducer from './reducers/field';
 
 const initialState: FieldStateType = {
   field: defaultField,
-  loading: false,
 };
 export const FieldContext = createContext<FieldContextType>({
   fieldState: initialState,
@@ -19,7 +18,6 @@ interface FieldProps {
 const FieldProvider = ({ field, children }: FieldProps) => {
   const [fieldState, fieldDispatch] = useReducer(reducer, {
     field,
-    loading: false,
   });
   const value: FieldContextType = useMemo(
     () => Object({ fieldState, fieldDispatch }),
