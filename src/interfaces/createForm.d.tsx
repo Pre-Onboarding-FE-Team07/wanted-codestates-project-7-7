@@ -38,8 +38,9 @@ export interface FormDataActionType {
 }
 
 export interface FormDataStateType {
-  fieldList: FieldListType;
+  id: string;
   title: string;
+  fieldList: FieldListType;
 }
 
 export interface FormDataContextType {

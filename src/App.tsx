@@ -7,6 +7,7 @@ import FormListPage from './pages/FormListPage';
 import CreateFormPage from './pages/CreateFormPage';
 import WriteFormPage from './pages/WriteFormPage';
 import UserDataPage from './pages/UserDataPage';
+import FormListProvider from 'context/FormListContext';
 
 function App() {
   return (
@@ -14,12 +15,14 @@ function App() {
       <GlobalStyle />
       <Header />
       <Router>
-        <Routes>
-          <Route path="/" element={<FormListPage />} />
-          <Route path="/create" element={<CreateFormPage />} />
-          <Route path="/write" element={<WriteFormPage />} />
-          <Route path="/userdata" element={<UserDataPage />} />
-        </Routes>
+        <FormListProvider>
+          <Routes>
+            <Route path="/" element={<FormListPage />} />
+            <Route path="/create" element={<CreateFormPage />} />
+            <Route path="/write" element={<WriteFormPage />} />
+            <Route path="/userdata" element={<UserDataPage />} />
+          </Routes>
+        </FormListProvider>
       </Router>
     </ThemeProvider>
   );
