@@ -1,21 +1,21 @@
 import { useContext, useState, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import { CreateFormContext } from 'context/CreateFormContext';
+import { FormDataContext } from 'context/FormDataContext';
 import { addField } from 'context/actions/createForm';
 import Modal from './Modal';
-import { FormDataType, FieldType } from 'interfaces/createForm.d';
+import { FieldListType, FieldType } from 'interfaces/createForm.d';
 
-const checkEmptyMustInput = (formData: FormDataType) => {
-  return formData.some((field: FieldType) => {
+const checkEmptyMustInput = (fieldList: FieldListType) => {
+  return fieldList.some((field: FieldType) => {
     return field.label === '' || (field.options ? field.options.length === 0 : false);
   });
 };
 function CreateFormButtonWrap() {
-  const { state, dispatch } = useContext(CreateFormContext);
+  const { state, dispatch } = useContext(FormDataContext);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const handleAddClick = () => dispatch(addField());
   const handleSaveClick = () => {
-    if (state.formData.length === 0) {
+    if (state.fieldList.length === 0) {
       alert('적어도 하나 이상의 필드를 추가해주세요.');
       return;
     }
@@ -23,7 +23,7 @@ function CreateFormButtonWrap() {
       alert('제목을 작성해주세요.');
       return;
     }
-    if (checkEmptyMustInput(state.formData)) {
+    if (checkEmptyMustInput(state.fieldList)) {
       alert('작성하지 않은 항목이 있습니다.');
       return;
     }

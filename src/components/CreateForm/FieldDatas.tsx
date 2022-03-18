@@ -3,12 +3,12 @@ import FieldTools from './FieldTools';
 import TextEditor from './TextEditor';
 import ReactQuill from 'react-quill';
 import { FieldContext } from 'context/FieldContext';
-import { CreateFormContext } from 'context/CreateFormContext';
+import { FormDataContext } from 'context/FormDataContext';
 import { updateFieldData } from 'context/actions/field';
 import { updateField } from 'context/actions/createForm';
 
 function FieldDatas() {
-  const { dispatch } = useContext(CreateFormContext);
+  const { dispatch } = useContext(FormDataContext);
   const { fieldState, fieldDispatch } = useContext(FieldContext);
   const field = useMemo(() => fieldState.field, [fieldState.field]);
   const quillRef = useRef<ReactQuill>(null);

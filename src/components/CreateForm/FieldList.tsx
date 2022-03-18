@@ -2,21 +2,21 @@ import { useContext, useRef, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import Field from './Field';
 import { FieldType } from 'interfaces/createForm.d';
-import { CreateFormContext } from 'context/CreateFormContext';
+import { FormDataContext } from 'context/FormDataContext';
 import { setFields } from 'context/actions/createForm';
 
 function FieldList() {
-  const { state, dispatch } = useContext(CreateFormContext);
-  const formData = useMemo(() => state.formData, [state.formData]);
+  const { state, dispatch } = useContext(FormDataContext);
+  const fieldList = useMemo(() => state.fieldList, [state.fieldList]);
   const startItem = useRef<number | null>(null);
   const overItem = useRef<number | null>(null);
 
   const handleDragEnd = useCallback(
-    (formData) => {
+    (fieldList) => {
       const startIndex = startItem.current;
       const endIndex = overItem.current;
       if (startIndex !== endIndex && startIndex !== null && endIndex !== null) {
-        const list = [...formData];
+        const list = [...fieldList];
         const target = list[startIndex];
         list.splice(startIndex, 1);
         list.splice(endIndex, 0, target);
@@ -32,7 +32,7 @@ function FieldList() {
   );
   return (
     <FieldListWrap>
-      {formData.map((field: FieldType, index: number) => (
+      {fieldList.map((field: FieldType, index: number) => (
         <Field
           key={field.id}
           data={field}

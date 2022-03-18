@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import FieldList from 'components/CreateForm/FieldList';
-import CreateFormProvider, { CreateFormContext } from 'context/CreateFormContext';
+import CreateFormProvider, { FormDataContext } from 'context/FormDataContext';
 import CreateFormButtonWrap from 'components/CreateForm/ButtonWrap';
 import { updateTitle } from 'context/actions/createForm';
 
@@ -24,7 +24,7 @@ function CreateFormPage() {
 }
 
 function Title() {
-  const { dispatch } = useContext(CreateFormContext);
+  const { dispatch } = useContext(FormDataContext);
   const handleChangeInput = (e: { target: HTMLInputElement }) =>
     dispatch(updateTitle(e.target.value));
   return <InputTitle onChange={handleChangeInput}></InputTitle>;

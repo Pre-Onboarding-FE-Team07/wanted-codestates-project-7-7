@@ -7,31 +7,31 @@ const reducer = (state: CreateFormStateType, action: CreateFormActionType): Crea
     case SET_FIELDS:
       return {
         ...state,
-        formData: action.newFields || [],
+        fieldList: action.newFields || [],
       };
     case ADD_FIELD:
-      const { formData } = state;
+      const { fieldList } = state;
       let lastId = 0;
-      if (formData.length) {
-        const lastField = formData[formData.length - 1];
+      if (fieldList.length) {
+        const lastField = fieldList[fieldList.length - 1];
         lastId = Number(lastField.id.split('_')[1]);
       }
       const newField = { ...defaultField, id: `field_${lastId + 1}` };
       return {
         ...state,
-        formData: [...state.formData, newField],
+        fieldList: [...state.fieldList, newField],
       };
     case UPDATE_FIELD:
       return {
         ...state,
-        formData: state.formData.map((field: FieldType) =>
+        fieldList: state.fieldList.map((field: FieldType) =>
           field.id === action.field?.id ? { ...field, ...action.field } : field
         ),
       };
     case DELETE_FIELD:
       return {
         ...state,
-        formData: state.formData.filter((field: FieldType) => field.id !== action.fieldId),
+        fieldList: state.fieldList.filter((field: FieldType) => field.id !== action.fieldId),
       };
     case UPDATE_TITLE:
       return {

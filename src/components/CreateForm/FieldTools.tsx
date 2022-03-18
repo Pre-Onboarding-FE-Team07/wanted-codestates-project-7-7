@@ -5,12 +5,12 @@ import { CgArrowsV, CgClose } from 'react-icons/cg';
 import { formTypes, formTextTypes } from 'constants/createForm';
 import { FormType } from 'interfaces/createForm.d';
 import { FieldContext } from 'context/FieldContext';
-import { CreateFormContext } from 'context/CreateFormContext';
+import { FormDataContext } from 'context/FormDataContext';
 import { updateFieldData } from 'context/actions/field';
 import { deleteField } from 'context/actions/createForm';
 
 function FieldTools() {
-  const { dispatch } = useContext(CreateFormContext);
+  const { dispatch } = useContext(FormDataContext);
   const { fieldState, fieldDispatch } = useContext(FieldContext);
   const field = useMemo(() => fieldState.field, [fieldState.field]);
   const [formType, setFormType] = useState<FormType>(formTypes[0]);
