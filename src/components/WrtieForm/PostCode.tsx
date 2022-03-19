@@ -5,15 +5,13 @@ import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
 import Btn from '../ButtonCustom';
-interface PostCodeProps {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
-}
+import { PostCodeType } from 'interfaces/writeForm';
 
-function PostCode({ setAddress }: PostCodeProps) {
+function PostCode({ setAddress, item }: PostCodeType) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddress, setIsAddress] = useState('');
   const [isDetail, setIsDetail] = useState('');
-
+  const { label, required } = item;
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -27,7 +25,7 @@ function PostCode({ setAddress }: PostCodeProps) {
 
   const isOrNotAddress = () => {
     if (isAddress.length === 0) {
-      return Promise.reject(new Error('주소를 입력해주세요!'));
+      return Promise.reject(new Error(`${label} 입력해주세요!`));
     } else {
       return Promise.resolve();
     }
@@ -37,10 +35,10 @@ function PostCode({ setAddress }: PostCodeProps) {
     <div>
       <Form.Item
         name="address"
-        label="배송지"
+        label={label}
         rules={[
           {
-            required: true,
+            required: required,
             validator: isOrNotAddress,
           },
         ]}

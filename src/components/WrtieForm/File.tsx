@@ -5,13 +5,11 @@ import { UploadChangeParam } from 'antd/lib/upload';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { FileType } from 'interfaces/writeForm';
 
-interface FileProps {
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
-}
-
-function File({ setUrl }: FileProps) {
+function File({ setUrl, item }: FileType) {
   const { Dragger } = Upload;
+  const { label, required } = item;
   const props = {
     name: 'file',
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
@@ -54,12 +52,12 @@ function File({ setUrl }: FileProps) {
 
   return (
     <Form.Item
-      name="input_1"
-      label="첨부파일"
+      name="file"
+      label={label}
       valuePropName="fileList"
       rules={[
         {
-          required: false,
+          required: required,
           message: '파일을 넣어주세요!',
         },
       ]}

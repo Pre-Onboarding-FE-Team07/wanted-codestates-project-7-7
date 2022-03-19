@@ -1,6 +1,8 @@
 import { Form, Radio } from 'antd';
+import { componentType } from 'interfaces/writeForm';
 
-function Agreement() {
+function Agreement({ item }: componentType) {
+  const { label } = item;
   return (
     <Form.Item
       name="agreement"
@@ -8,11 +10,11 @@ function Agreement() {
       rules={[
         {
           validator: (_, value) =>
-            value ? Promise.resolve() : Promise.reject(new Error('약관에 동의해주세요!')),
+            value ? Promise.resolve() : Promise.reject(new Error(`${label} 동의해주세요!`)),
         },
       ]}
     >
-      <Radio>개인정보 수집 약관 동의(필수)</Radio>
+      <Radio>{label}</Radio>
     </Form.Item>
   );
 }
