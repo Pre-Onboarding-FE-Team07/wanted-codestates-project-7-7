@@ -18,7 +18,6 @@ function PostCode({ setAddress, item }: PostCodeType) {
 
   const handleComplete = (data: Address) => setIsAddress(data.address);
   const onAddress = () => {
-    setIsAddress(isAddress);
     setAddress(isAddress.concat(' ').concat(isDetail));
     setIsModalVisible(false);
   };
@@ -43,7 +42,11 @@ function PostCode({ setAddress, item }: PostCodeType) {
           },
         ]}
       >
-        <InputAddress onClick={showModal} value={isAddress + ' ' + isDetail} />
+        <InputAddress
+          onClick={showModal}
+          placeholder={isAddress.concat(' ').concat(isDetail)}
+          readOnly={true}
+        />
       </Form.Item>
       <Modal
         title={

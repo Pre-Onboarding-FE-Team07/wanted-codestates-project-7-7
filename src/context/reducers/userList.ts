@@ -1,14 +1,22 @@
-import { UserListState } from 'interfaces/user';
+import { allUserListType } from 'interfaces/user';
 import { UserListAction } from '../actions/userList';
 
 export default function userListReducer(
-  state: UserListState,
+  state: allUserListType,
   action: UserListAction
-): UserListState {
+): allUserListType {
   switch (action.type) {
     case 'CREATE':
-      const { name, phone, address, select, url, agreement } = action.data;
-      return state.concat({ name, phone, address, select, url, agreement });
+      const selectUser = state.filter((item) => item.id === action.id)[0];
+      const selectUserList = selectUser?.userList;
+      const selectUserObj = {
+        id: action.id,
+        userList:
+          selectUserList === undefined ? [action.userData] : [...selectUserList, action.userData],
+      };
+      const unSelectedState = state.filter((item) => item.id !== action.id);
+
+      return [...unSelectedState, selectUserObj];
     default:
       throw new Error('Unhandled action');
   }

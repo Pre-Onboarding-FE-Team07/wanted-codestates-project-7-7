@@ -6,14 +6,15 @@ import PostCode from '../components/WrtieForm/PostCode';
 import File from '../components/WrtieForm/File';
 import Btn from '../components/ButtonCustom';
 import Agreement from '../components/WrtieForm/Agreement';
-import { userProps } from '../interfaces/user';
+import { userType } from '../interfaces/user';
 import SelectBox from '../components/WrtieForm/SelectBox';
 import Name from '../components/WrtieForm/Name';
 import { UserDataProvider } from 'context/UserDataContext';
 import { useUserListDispatch } from 'context/UserListContext';
 import { useState, useContext, useMemo } from 'react';
 import { FormListContext } from 'context/FormListContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FieldType } from 'interfaces/createForm.d';
 
 function WriteFormPage() {
   const [form] = Form.useForm();
@@ -26,11 +27,13 @@ function WriteFormPage() {
     () => formListState.formList.filter((item) => item.id === id)[0].fieldList,
     [formListState.formList, id]
   );
+  const navigate = useNavigate();
 
-  const onFinish = (values: userProps) => {
+  const onFinish = (values: userType) => {
     userListDispatch({
       type: 'CREATE',
-      data: {
+      id: id,
+      userData: {
         name: values.name,
         phone: values.phone,
         address: address,
@@ -39,28 +42,27 @@ function WriteFormPage() {
         agreement: values.agreement,
       },
     });
+    navigate(`/userData/${id}`);
   };
 
-  const componentType = () =>
-    matchData?.map((item) => {
-      console.log('item', item);
-      switch (item.type) {
-        case 'text':
-          return <Name item={item} />;
-        case 'phone':
-          return <Phone item={item} />;
-        case 'address':
-          return <PostCode setAddress={setAddress} item={item} />;
-        case 'select':
-          return <SelectBox item={item} />;
-        case 'file':
-          return <File setUrl={setUrl} item={item} />;
-        case 'agreement':
-          return <Agreement item={item} />;
-        default:
-          return null;
-      }
-    });
+  const componentType = (item: FieldType) => {
+    switch (item.type) {
+      case 'text':
+        return <Name item={item} />;
+      case 'phone':
+        return <Phone item={item} />;
+      case 'address':
+        return <PostCode setAddress={setAddress} item={item} />;
+      case 'select':
+        return <SelectBox item={item} />;
+      case 'file':
+        return <File setUrl={setUrl} item={item} />;
+      case 'agreement':
+        return <Agreement item={item} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <UserDataProvider>
@@ -83,7 +85,10 @@ function WriteFormPage() {
           layout="vertical"
           autoComplete="off"
         >
-          {componentType()}
+          {/* {componentType()} */}
+          {matchData?.map((item, key) => (
+            <div key={key}>{componentType(item)}</div>
+          ))}
           <ButtonArea>
             <Form.Item shouldUpdate>
               {() => (
@@ -92,7 +97,7 @@ function WriteFormPage() {
                 </Btn>
               )}
             </Form.Item>
-            <Btn>취소하기</Btn>
+            <Btn onClick={() => navigate(`/`)}>취소하기</Btn>
           </ButtonArea>
         </Form>
       </Write>

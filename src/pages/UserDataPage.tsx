@@ -1,12 +1,25 @@
 import 'antd/dist/antd.min.css';
-import { Form, Pagination, Radio } from 'antd';
+import { Pagination, Radio } from 'antd';
 import styled from 'styled-components';
 import { useUserListState } from 'context/UserListContext';
 import InputCustom from 'components/InputCustom';
-import { useState } from 'react';
+import { useState, useMemo, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { FormListContext } from 'context/FormListContext';
 
 function UserDataPage() {
-  const user = useUserListState();
+  const userAllList = useUserListState();
+  const { formListState } = useContext(FormListContext);
+  const { id } = useParams();
+  const matchUserList = useMemo(
+    () => userAllList.filter((item) => item.id === id)[0]?.userList,
+    [id, userAllList]
+  );
+  const matchData = useMemo(
+    () => formListState.formList.filter((item) => item.id === id)[0].fieldList,
+    [formListState.formList, id]
+  );
+
   const defaultPage = {
     min: 0,
     max: 1,
@@ -19,50 +32,75 @@ function UserDataPage() {
       max: page,
     });
   };
+  const argLabel = () => {
+    return matchData?.map((item) => (item.type === 'agreement' ? <p>{item.label}</p> : null));
+  };
+
   return (
-    <Form layout="vertical">
-      {user &&
-        user.slice(current.min, current.max).map((item, idx) => (
-          <User key={idx}>
-            <Form.Item label="이름">
+    <UserForm>
+      {matchUserList?.slice(current.min, current.max).map((item, idx) => (
+        <div key={idx}>
+          {item.name !== undefined ? (
+            <Field>
+              {matchData?.map((item) => (item.type === 'text' ? <p>{item.label}</p> : null))}
               <InputCustom value={item.name} readOnly={true} />
-            </Form.Item>
-            <Form.Item label="휴대폰 번호">
+            </Field>
+          ) : null}
+          {item.phone !== undefined ? (
+            <Field>
+              {matchData?.map((item) => (item.type === 'phone' ? <p>{item.label}</p> : null))}
               <InputCustom value={item.phone} readOnly={true} />
-            </Form.Item>
-            <Form.Item label="배송지">
+            </Field>
+          ) : null}
+          {item.address !== '' ? (
+            <Field>
+              {matchData?.map((item) => (item.type === 'address' ? <p>{item.label}</p> : null))}
               <InputCustom value={item.address} readOnly={true} />
-            </Form.Item>
-            <Form.Item label="옵션1">
+            </Field>
+          ) : null}
+          {item.select !== undefined ? (
+            <Field>
+              {matchData?.map((item) => (item.type === 'select' ? <p>{item.label}</p> : null))}
               <InputCustom value={item.select} readOnly={true} />
-            </Form.Item>
-            <Form.Item label="첨부파일">
+            </Field>
+          ) : null}
+          {item.url !== '' ? (
+            <Field>
+              {matchData?.map((item) => (item.type === 'file' ? <p>{item.label}</p> : null))}
               <ImgBox>
                 <ImgScreen src={item.url} alt="avatar" />
               </ImgBox>
-            </Form.Item>
-            <Form.Item valuePropName="checked">
-              <ImgBox>
-                <Radio checked={item.agreement}>개인정보 수집 약관 동의(필수)</Radio>
-              </ImgBox>
-            </Form.Item>
-          </User>
-        ))}
+            </Field>
+          ) : null}
+          {item.agreement !== undefined ? (
+            <Field>
+              {argLabel()}
+              <Radio checked={item.agreement}>{argLabel()}</Radio>
+            </Field>
+          ) : null}
+        </div>
+      ))}
       <Pagination
         simple
         defaultCurrent={1}
-        total={user.length * 10}
+        total={matchUserList.length * 10}
         onChange={(page) => onChangePage(page)}
-        style={{ textAlign: 'right', padding: '2rem' }}
+        style={{ padding: '2rem', position: 'absolute', bottom: 0, right: 0 }}
       />
-    </Form>
+    </UserForm>
   );
 }
 
 export default UserDataPage;
 
-const User = styled.div`
-  margin: 2rem;
+const UserForm = styled.div`
+  margin: 2rem 0;
+  position: relative;
+  min-height: 90vh;
+`;
+
+const Field = styled.div`
+  margin: 1rem;
 `;
 
 const ImgScreen = styled.img`
