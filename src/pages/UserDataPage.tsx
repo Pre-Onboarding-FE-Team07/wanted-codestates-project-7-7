@@ -1,16 +1,18 @@
 import 'antd/dist/antd.min.css';
-import { Pagination, Radio } from 'antd';
+import { Pagination, Radio, Empty } from 'antd';
 import styled from 'styled-components';
 import { useUserListState } from 'context/UserListContext';
 import InputCustom from 'components/InputCustom';
 import { useState, useMemo, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FormListContext } from 'context/FormListContext';
+import ButtonCustom from 'components/ButtonCustom';
 
 function UserDataPage() {
   const userAllList = useUserListState();
   const { formListState } = useContext(FormListContext);
   const { id } = useParams();
+  const navigate = useNavigate();
   const matchUserList = useMemo(
     () => userAllList.filter((item) => item.id === id)[0]?.userList,
     [id, userAllList]
@@ -36,6 +38,18 @@ function UserDataPage() {
     return matchData?.map((item) => (item.type === 'agreement' ? <p>{item.label}</p> : null));
   };
 
+  if (matchUserList === undefined)
+    return (
+      <EmptyForm>
+        <Empty>
+          폼을 작성한 사용자가 없습니다. <br />
+          <br />
+          <ButtonCustom type="primary" onClick={() => navigate(`/write/${id}`)}>
+            작성하러가기
+          </ButtonCustom>
+        </Empty>
+      </EmptyForm>
+    );
   return (
     <UserForm>
       {matchUserList?.slice(current.min, current.max).map((item, idx) => (
@@ -92,6 +106,12 @@ function UserDataPage() {
 }
 
 export default UserDataPage;
+
+const EmptyForm = styled.div`
+  display: grid;
+  place-items: center;
+  min-height: 70vh;
+`;
 
 const UserForm = styled.div`
   margin: 2rem 0;
