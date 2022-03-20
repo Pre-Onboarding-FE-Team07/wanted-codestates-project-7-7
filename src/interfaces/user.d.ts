@@ -20,8 +20,8 @@ export type allUserListType = userListType[];
 
 export interface disabledCheckType {
   label: string;
-  required: boolean;
-  value: stinrg | boolean | undefined;
+  required?: boolean;
+  value?: stinrg | boolean;
 }
 
-export type disabledCheckUserData = disabledCheckType[];
+export type disabledCheckUserData = Array<disabledCheckType>;
