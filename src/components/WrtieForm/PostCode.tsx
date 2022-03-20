@@ -20,14 +20,18 @@ function PostCode({ setAddress, item }: PostCodeType) {
   const onAddress = () => {
     setAddress(isAddress.concat(' ').concat(isDetail));
     setIsModalVisible(false);
+    isOrNotAddress();
   };
 
   const isOrNotAddress = () => {
-    if (isAddress.length === 0) {
-      return Promise.reject(new Error(`${label} 입력해주세요!`));
-    } else {
-      return Promise.resolve();
+    if (required) {
+      if (isAddress.length === 0) {
+        return Promise.reject(new Error(`${label} 입력해주세요!`));
+      } else {
+        return Promise.resolve();
+      }
     }
+    return Promise.resolve();
   };
 
   return (
@@ -37,7 +41,6 @@ function PostCode({ setAddress, item }: PostCodeType) {
         label={label}
         rules={[
           {
-            required: required,
             validator: isOrNotAddress,
           },
         ]}

@@ -35,7 +35,9 @@ function UserDataPage() {
     });
   };
   const argLabel = () => {
-    return matchData?.map((item) => (item.type === 'agreement' ? <p>{item.label}</p> : null));
+    return matchData?.map((item, idx) =>
+      item.type === 'agreement' ? <p key={idx}>{item.label}</p> : null
+    );
   };
 
   if (matchUserList === undefined)

@@ -1,54 +1,37 @@
-import { Form, Upload } from 'antd';
-import { FiPlus } from 'react-icons/fi';
+import { Form, Progress } from 'antd';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { UploadChangeParam } from 'antd/lib/upload';
-import { UploadFile } from 'antd/lib/upload/interface';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { FiPlus } from 'react-icons/fi';
 import { FileType } from 'interfaces/writeForm';
 
 function File({ setUrl, item }: FileType) {
-  const { Dragger } = Upload;
   const { label, required } = item;
-  const props = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text',
-    },
-  };
-  const [img, setImg] = useState({
-    imageUrl: '',
-    loading: false,
-  });
-  const handleChange = (info: UploadChangeParam<UploadFile<unknown>>) => {
-    if (info.file.status === 'uploading') {
-      setImg({
-        imageUrl: '',
-        loading: true,
-      });
-      return;
-    }
-    if (info.file.status === 'done') {
-      if (info.file.originFileObj) {
-        getBase64(info.file.originFileObj, (imageUrl: string) => {
-          setImg({
-            imageUrl,
-            loading: false,
-          });
-        });
-      }
-    }
-    function getBase64(img: Blob, callback: (result: string) => void) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => callback(String(reader.result)));
-      reader.readAsDataURL(img);
-    }
+  //파일 미리볼 url을 저장해줄 state
+  const [fileImage, setFileImage] = useState('');
+  const [percent, setPercent] = useState(0);
+
+  // 파일 정보 저장
+  const saveFileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInterval(() => {
+      setPercent((prev) => prev + 1);
+    }, 10);
+    setTimeout(function () {
+      const target = e.target as HTMLInputElement;
+      const file = target.files?.[0];
+      setFileImage(URL.createObjectURL(file as File));
+      e.target.value = '';
+    }, 2000);
   };
 
+  //   // 파일 삭제
+  //   const deleteFileImage = () => {
+  //     URL.revokeObjectURL(fileImage);
+  //     setFileImage('');
+  //   };
+
   useEffect(() => {
-    setUrl(img.imageUrl);
-  }, [img.imageUrl, setUrl]);
+    setUrl(fileImage);
+  }, [fileImage, setUrl]);
 
   return (
     <Form.Item
@@ -58,36 +41,61 @@ function File({ setUrl, item }: FileType) {
       rules={[
         {
           required: required,
-          message: '파일을 넣어주세요!',
+          message: `${label} 넣어주세요!`,
         },
       ]}
     >
-      <Dragger
-        style={{ borderRadius: '1rem', padding: '2rem 1rem' }}
-        {...props}
-        maxCount={1}
-        onChange={(info: UploadChangeParam<UploadFile<unknown>>) => handleChange(info)}
-      >
-        {img.imageUrl ? (
-          <ImgScreen src={img.imageUrl} alt="avatar" />
-        ) : (
-          <>
-            <Ptag>
-              <FiPlus />
-            </Ptag>
-            <Ptag>눌러서 파일을 등록</Ptag>
-          </>
-        )}
-      </Dragger>
+      <ImgArea>
+        <ImgLabel htmlFor="profile-image-input">
+          {fileImage.length !== 0 ? (
+            <PreviewImg alt="img" src={fileImage} />
+          ) : percent === 0 ? (
+            <FileSelectArea>
+              <Ptag>
+                <FiPlus />
+              </Ptag>
+              <Ptag>눌러서 파일을 등록</Ptag>
+            </FileSelectArea>
+          ) : (
+            <FileSelectArea>
+              <Progress percent={percent} />
+            </FileSelectArea>
+          )}
+        </ImgLabel>
+        <InputFile type="file" accept="image/*" id="profile-image-input" onChange={saveFileImage} />
+      </ImgArea>
     </Form.Item>
   );
 }
 
 export default File;
 
-const ImgScreen = styled.img`
-  height: 104px;
+const ImgArea = styled.div`
+  width: 100%;
+  height: 30vh;
+  background-color: ${(props) => props.theme.color.lightGray};
+  text-align: center;
+  border-radius: 1em;
 `;
+
+const ImgLabel = styled.label``;
+
+const PreviewImg = styled.img`
+  max-width: 100%;
+  height: 30vh;
+`;
+
+const InputFile = styled.input`
+  visibility: hidden;
+`;
+
+const FileSelectArea = styled.div`
+  text-align: center;
+  width: 100%;
+  padding: calc(20vh / 2) 3em 0;
+`;
+
 const Ptag = styled.p`
   margin-top: 8;
+  width: 100%;
 `;

@@ -16,6 +16,6 @@ export const disabledCheckInitData = [
   {
     label: '',
     required: false,
-    value: '',
+    value: '' || true,
   },
 ];

@@ -3,11 +3,11 @@ import 'antd/dist/antd.min.css';
 import { Form } from 'antd';
 import Btn from '../components/ButtonCustom';
 import { userType } from '../interfaces/user';
-import { UserDataProvider } from 'context/UserDataContext';
 import { useUserListDispatch } from 'context/UserListContext';
 import { useState, useContext, useMemo, useCallback } from 'react';
 import { FormListContext } from 'context/FormListContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import WriteFormWrap from 'components/WriteFormWrap';
 
 function WriteFormPage() {
@@ -15,7 +15,7 @@ function WriteFormPage() {
   const userListDispatch = useUserListDispatch();
   const [address, setAddress] = useState('');
   const [url, setUrl] = useState('');
-  // const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const { formListState } = useContext(FormListContext);
   const { id } = useParams();
   const matchData = useMemo(
@@ -23,6 +23,11 @@ function WriteFormPage() {
     [formListState.formList, id]
   );
   const navigate = useNavigate();
+  const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
+
+  useEffect(() => {
+    forceUpdate({});
+  }, []);
 
   const onFinish = (values: userType) => {
     userListDispatch({
@@ -54,37 +59,40 @@ function WriteFormPage() {
     [setUrl]
   );
 
+  const onValuesChange = (value: object) => setDisabled(Object.values(value).length > 0);
+
   return (
-    <UserDataProvider>
-      <Write>
-        <Form
-          form={form}
-          onFinish={onFinish}
-          // onValuesChange={(allFields) => {
-          //   const name = allFields.name;
-          //   name.length === 0 ? setDisabled(true) : setDisabled(false);
-          // }}
-          layout="vertical"
-          autoComplete="off"
-        >
-          <WriteFormWrap
-            matchData={matchData}
-            setAddress={handleChangeAddress}
-            setUrl={handleChangeUrl}
-          />
-          <ButtonArea>
-            <Form.Item shouldUpdate>
-              {() => (
-                <Btn type="primary" htmlType="submit">
-                  제출하기
-                </Btn>
-              )}
-            </Form.Item>
-            <Btn onClick={() => navigate(`/`)}>취소하기</Btn>
-          </ButtonArea>
-        </Form>
-      </Write>
-    </UserDataProvider>
+    <Write>
+      <Form
+        form={form}
+        onFinish={onFinish}
+        onValuesChange={onValuesChange}
+        layout="vertical"
+        autoComplete="off"
+      >
+        <WriteFormWrap
+          matchData={matchData}
+          setAddress={handleChangeAddress}
+          setUrl={handleChangeUrl}
+        />
+        <ButtonArea>
+          <Form.Item shouldUpdate>
+            {() => (
+              <Btn
+                type="primary"
+                htmlType="submit"
+                disabled={
+                  !disabled || !!form.getFieldsError().filter(({ errors }) => errors.length).length
+                }
+              >
+                제출하기
+              </Btn>
+            )}
+          </Form.Item>
+          <Btn onClick={() => navigate(`/`)}>취소하기</Btn>
+        </ButtonArea>
+      </Form>
+    </Write>
   );
 }
 
