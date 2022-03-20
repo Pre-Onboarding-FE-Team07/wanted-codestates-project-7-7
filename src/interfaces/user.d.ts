@@ -17,3 +17,11 @@ export type userListType = {
 };
 
 export type allUserListType = userListType[];
+
+export interface disabledCheckType {
+  label: string;
+  required: boolean;
+  value: stinrg | boolean | undefined;
+}
+
+export type disabledCheckUserData = disabledCheckType[];

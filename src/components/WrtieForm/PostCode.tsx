@@ -31,7 +31,7 @@ function PostCode({ setAddress, item }: PostCodeType) {
   };
 
   return (
-    <div>
+    <PostCodeStyle>
       <Form.Item
         name="address"
         label={label}
@@ -48,7 +48,7 @@ function PostCode({ setAddress, item }: PostCodeType) {
           readOnly={true}
         />
       </Form.Item>
-      <Modal
+      <PopUpAddress
         title={
           isAddress.length > 0 ? (
             <div>
@@ -77,12 +77,16 @@ function PostCode({ setAddress, item }: PostCodeType) {
             </Btn>
           </>
         )}
-      </Modal>
-    </div>
+      </PopUpAddress>
+    </PostCodeStyle>
   );
 }
 
 export default PostCode;
+
+const PostCodeStyle = styled.div`
+  position: relative;
+`;
 
 const InputAddress = styled(Input)`
   background: ${(props) => props.theme.color.lightGray};
@@ -94,4 +98,26 @@ const InputAddress = styled(Input)`
 const PrintAddress = styled.p`
   padding: 1.2rem;
   border-bottom: 1px solid ${(props) => props.theme.color.blue};
+`;
+
+const PopUpAddress = styled(Modal)`
+  .ant-modal-body {
+    padding: 0 !important;
+  }
+  ${({ theme }) => theme.mobile`
+    .ant-modal::after{
+      position: absolute;
+      max-width: 100% !important;
+      margin: 0 !important !important;
+      top: 0 !important !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    .ant-modal-body {
+      height: 90vh !important;
+    }
+    iframe{
+      height: 90vh !important;
+    }
+  `}
 `;

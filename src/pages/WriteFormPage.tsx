@@ -21,6 +21,7 @@ function WriteFormPage() {
   const userListDispatch = useUserListDispatch();
   const [address, setAddress] = useState('');
   const [url, setUrl] = useState('');
+  // const [disabled, setDisabled] = useState(true);
   const { formListState } = useContext(FormListContext);
   const { id } = useParams();
   const matchData = useMemo(
@@ -71,21 +72,12 @@ function WriteFormPage() {
           form={form}
           onFinish={onFinish}
           // onValuesChange={(allFields) => {
-          //   userDataSave(allFields);
-          //   // dispatchUserData({
-          //   //   type: 'SET_USER_DATA',
-          //   //   data: {
-          //   //     name: name,
-          //   //     phone: phone,
-          //   //     select: select,
-          //   //     agreement: agreement,
-          //   //   },
-          //   // });
+          //   const name = allFields.name;
+          //   name.length === 0 ? setDisabled(true) : setDisabled(false);
           // }}
           layout="vertical"
           autoComplete="off"
         >
-          {/* {componentType()} */}
           {matchData?.map((item, key) => (
             <div key={key}>{componentType(item)}</div>
           ))}

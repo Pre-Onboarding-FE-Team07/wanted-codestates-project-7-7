@@ -1,21 +1,10 @@
+import { allUserInitData } from 'constants/user';
 import { allUserListType } from 'interfaces/user';
 import React, { createContext, Dispatch, useReducer, useContext } from 'react';
 import { UserListAction } from './actions/userList';
 import userListReducer from './reducers/userList';
 
-const initialState: allUserListType = [
-  {
-    id: '',
-    userList: [
-      {
-        name: '',
-        phone: '',
-        address: '',
-        agreement: false,
-      },
-    ],
-  },
-];
+const initialState: allUserListType = allUserInitData;
 
 const UserListContext = createContext<allUserListType>(initialState);
 
@@ -23,7 +12,7 @@ type UserListDispatch = Dispatch<UserListAction>;
 const UserListDispatchContext = createContext<UserListDispatch | undefined>(undefined);
 
 export const UserListProvider = ({ children }: { children: React.ReactNode }) => {
-  const [userList, dispatch] = useReducer(userListReducer, initialState);
+  const [userList, dispatch] = useReducer(userListReducer, allUserInitData);
   return (
     <UserListDispatchContext.Provider value={dispatch}>
       <UserListContext.Provider value={userList}>{children}</UserListContext.Provider>
