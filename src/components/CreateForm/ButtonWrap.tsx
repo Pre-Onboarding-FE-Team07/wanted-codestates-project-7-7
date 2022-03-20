@@ -8,6 +8,8 @@ import Modal from './Modal';
 import { FieldListType, FieldType } from 'interfaces/createForm.d';
 import Toast from 'utils/toast';
 import { useNavigate } from 'react-router-dom';
+import WriteFormWrap from 'components/WriteFormWrap';
+import { Form } from 'antd';
 
 const checkEmptyMustInput = (fieldList: FieldListType) => {
   return fieldList.some((field: FieldType) => {
@@ -52,7 +54,9 @@ function CreateFormButtonWrap() {
       </BottomButtonArea>
       {isModalOpen && (
         <Modal title="폼 미리보기" toggleModal={toggleModal}>
-          <div>프리뷰폼 disalbed</div>
+          <Form layout="vertical" autoComplete="off" style={formStyle}>
+            <WriteFormWrap matchData={state.fieldList} />
+          </Form>
         </Modal>
       )}
     </>
@@ -88,3 +92,7 @@ const Button = styled(ButtonStyle)`
       ${color === 'blue' ? theme.button.blue : theme.button.lightgray};
     `};
 `;
+
+const formStyle = {
+  padding: '1rem',
+};

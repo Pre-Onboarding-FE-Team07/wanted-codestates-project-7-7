@@ -1,20 +1,14 @@
 import styled from 'styled-components';
 import 'antd/dist/antd.min.css';
 import { Form } from 'antd';
-import Phone from '../components/WrtieForm/Phone';
-import PostCode from '../components/WrtieForm/PostCode';
-import File from '../components/WrtieForm/File';
 import Btn from '../components/ButtonCustom';
-import Agreement from '../components/WrtieForm/Agreement';
 import { userType } from '../interfaces/user';
-import SelectBox from '../components/WrtieForm/SelectBox';
-import Name from '../components/WrtieForm/Name';
 import { useUserListDispatch } from 'context/UserListContext';
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext, useMemo, useCallback } from 'react';
 import { FormListContext } from 'context/FormListContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FieldType } from 'interfaces/createForm.d';
 import { useEffect } from 'react';
+import WriteFormWrap from 'components/WriteFormWrap';
 
 function WriteFormPage() {
   const [form] = Form.useForm();
@@ -51,24 +45,19 @@ function WriteFormPage() {
     navigate(`/userData/${id}`);
   };
 
-  const componentType = (item: FieldType) => {
-    switch (item.type) {
-      case 'text':
-        return <Name item={item} />;
-      case 'phone':
-        return <Phone item={item} />;
-      case 'address':
-        return <PostCode setAddress={setAddress} item={item} />;
-      case 'select':
-        return <SelectBox item={item} />;
-      case 'file':
-        return <File setUrl={setUrl} item={item} />;
-      case 'agreement':
-        return <Agreement item={item} />;
-      default:
-        return null;
-    }
-  };
+  const handleChangeAddress = useCallback(
+    (value: string) => {
+      setAddress(value);
+    },
+    [setAddress]
+  );
+
+  const handleChangeUrl = useCallback(
+    (value: string) => {
+      setUrl(value);
+    },
+    [setUrl]
+  );
 
   const onValuesChange = (value: object) => setDisabled(Object.values(value).length > 0);
 
@@ -81,9 +70,11 @@ function WriteFormPage() {
         layout="vertical"
         autoComplete="off"
       >
-        {matchData?.map((item, key) => (
-          <div key={key}>{componentType(item)}</div>
-        ))}
+        <WriteFormWrap
+          matchData={matchData}
+          setAddress={handleChangeAddress}
+          setUrl={handleChangeUrl}
+        />
         <ButtonArea>
           <Form.Item shouldUpdate>
             {() => (
