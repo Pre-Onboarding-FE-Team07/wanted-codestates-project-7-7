@@ -5,6 +5,7 @@ import { componentType } from 'interfaces/writeForm';
 
 function Name({ item }: componentType) {
   const { label, placeholder, required } = item;
+
   return (
     <Form.Item
       name="name"

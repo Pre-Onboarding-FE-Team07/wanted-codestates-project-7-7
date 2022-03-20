@@ -24,4 +24,4 @@ export interface disabledCheckType {
   value?: stinrg | boolean;
 }
 
-export type disabledCheckUserData = Array<disabledCheckType>;
+export type disabledCheckUserData = disabledCheckType[];
