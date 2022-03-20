@@ -19,8 +19,10 @@ function SelectBox({ item }: componentType) {
       ]}
     >
       <SelectItem>
-        {options?.map((item) => (
-          <Option value={item}>{item}</Option>
+        {options?.map((item, index) => (
+          <Option key={index} value={item}>
+            {item}
+          </Option>
         ))}
       </SelectItem>
     </Form.Item>
