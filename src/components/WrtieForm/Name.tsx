@@ -1,24 +1,22 @@
 import styled from 'styled-components';
 import { Input, Form } from 'antd';
 import 'antd/dist/antd.min.css';
+import { componentType } from 'interfaces/writeForm';
 
-function Name() {
+function Name({ item }: componentType) {
+  const { label, placeholder, required } = item;
   return (
     <Form.Item
       name="name"
-      label="이름"
+      label={label}
       rules={[
         {
-          required: true,
-          message: '이름을 입력해주세요!',
-        },
-        {
-          pattern: /^[가-힣]{2,4}$/,
-          message: '2~4자의 한글이름을 입력해주세요!',
+          required: required,
+          message: `${label} 입력해주세요!`,
         },
       ]}
     >
-      <InputName placeholder="주민등록상 이름 입력" />
+      <InputName placeholder={placeholder} />
     </Form.Item>
   );
 }

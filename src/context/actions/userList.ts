@@ -1,3 +1,3 @@
-import { userProps } from 'interfaces/user';
+import { userId, userType } from 'interfaces/user';
 
-export type UserListAction = { type: 'CREATE'; data: userProps };
+export type UserListAction = { type: 'CREATE'; id: userId; userData: userType };

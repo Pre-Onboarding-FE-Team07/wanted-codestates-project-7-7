@@ -1,14 +1,14 @@
-import { userProps } from 'interfaces/user';
+import { userType } from 'interfaces/user';
 import { createContext, Dispatch, useContext, useReducer } from 'react';
 
-const UserDataContext = createContext<userProps>({
+const UserDataContext = createContext<userType>({
   name: '',
   phone: '',
   address: '',
   agreement: false,
 });
 
-export type UserDataState = userProps;
+export type UserDataState = userType;
 export type UserDataAction = {
   type: 'SET_USER_DATA';
   data: object;

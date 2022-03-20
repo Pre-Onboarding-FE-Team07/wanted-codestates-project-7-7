@@ -1,17 +1,18 @@
-import { userListRead } from 'constants/user';
-import { UserListState } from 'interfaces/user';
+import { allUserInitData } from 'constants/user';
+import { allUserListType } from 'interfaces/user';
 import React, { createContext, Dispatch, useReducer, useContext } from 'react';
 import { UserListAction } from './actions/userList';
 import userListReducer from './reducers/userList';
 
-const UserListContext = createContext<UserListState | undefined>(undefined);
+const initialState: allUserListType = allUserInitData;
+
+const UserListContext = createContext<allUserListType>(initialState);
 
 type UserListDispatch = Dispatch<UserListAction>;
 const UserListDispatchContext = createContext<UserListDispatch | undefined>(undefined);
 
 export const UserListProvider = ({ children }: { children: React.ReactNode }) => {
-  const [userList, dispatch] = useReducer(userListReducer, userListRead);
-  console.log('userList', userList);
+  const [userList, dispatch] = useReducer(userListReducer, allUserInitData);
   return (
     <UserListDispatchContext.Provider value={dispatch}>
       <UserListContext.Provider value={userList}>{children}</UserListContext.Provider>
@@ -21,7 +22,7 @@ export const UserListProvider = ({ children }: { children: React.ReactNode }) =>
 
 export const useUserListState = () => {
   const state = useContext(UserListContext);
-  if (!state) throw new Error('useUserListState not found');
+  if (!state) throw new Error('useuserListType not found');
   return state;
 };
 

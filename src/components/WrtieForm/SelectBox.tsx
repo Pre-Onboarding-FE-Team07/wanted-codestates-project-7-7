@@ -1,24 +1,27 @@
 import { Select, Form } from 'antd';
 import 'antd/dist/antd.min.css';
+import { componentType } from 'interfaces/writeForm';
 import styled from 'styled-components';
 
-function SelectBox() {
+function SelectBox({ item }: componentType) {
   const { Option } = Select;
+  const { label, required, options } = item;
   return (
     <Form.Item
       name="select"
-      label="옵션1"
+      label={label}
       hasFeedback
       rules={[
         {
-          required: true,
-          message: '옵션을 선택해주세요!',
+          required: required,
+          message: `${label} 선택해주세요!`,
         },
       ]}
     >
       <SelectItem>
-        <Option value="china">China</Option>
-        <Option value="usa">U.S.A</Option>
+        {options?.map((item) => (
+          <Option value={item}>{item}</Option>
+        ))}
       </SelectItem>
     </Form.Item>
   );

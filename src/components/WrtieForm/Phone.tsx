@@ -2,9 +2,11 @@ import styled from 'styled-components';
 import { Input, Form } from 'antd';
 import 'antd/dist/antd.min.css';
 import { useState, useCallback } from 'react';
+import { componentType } from 'interfaces/writeForm';
 
-export default function Phone() {
+export default function Phone({ item }: componentType) {
   const [number, setNumber] = useState<string>('');
+  const { label, placeholder, required } = item;
 
   const onPhoneNumber = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,11 +24,11 @@ export default function Phone() {
   return (
     <Form.Item
       name="phone"
-      label="휴대폰 번호"
+      label={label}
       rules={[
         {
-          required: true,
-          message: '핸드폰 번호를 입력해주세요!',
+          required: required,
+          message: `${label} 입력해주세요!`,
         },
         {
           pattern: /^(\d{3})-(\d{4})-(\d{4})$/,
@@ -34,7 +36,7 @@ export default function Phone() {
         },
       ]}
     >
-      <InputPhone onInput={onPhoneNumber} value={number} />
+      <InputPhone onInput={onPhoneNumber} value={number} placeholder={placeholder} />
     </Form.Item>
   );
 }

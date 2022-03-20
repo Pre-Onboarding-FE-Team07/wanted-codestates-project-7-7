@@ -5,49 +5,50 @@ import { useState } from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import { FiChevronLeft } from 'react-icons/fi';
 import Btn from '../ButtonCustom';
-interface PostCodeProps {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
-}
+import { PostCodeType } from 'interfaces/writeForm';
 
-function PostCode({ setAddress }: PostCodeProps) {
+function PostCode({ setAddress, item }: PostCodeType) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isAddress, setIsAddress] = useState('');
   const [isDetail, setIsDetail] = useState('');
-
+  const { label, required } = item;
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleComplete = (data: Address) => setIsAddress(data.address);
   const onAddress = () => {
-    setIsAddress(isAddress);
     setAddress(isAddress.concat(' ').concat(isDetail));
     setIsModalVisible(false);
   };
 
   const isOrNotAddress = () => {
     if (isAddress.length === 0) {
-      return Promise.reject(new Error('주소를 입력해주세요!'));
+      return Promise.reject(new Error(`${label} 입력해주세요!`));
     } else {
       return Promise.resolve();
     }
   };
 
   return (
-    <div>
+    <PostCodeStyle>
       <Form.Item
         name="address"
-        label="배송지"
+        label={label}
         rules={[
           {
-            required: true,
+            required: required,
             validator: isOrNotAddress,
           },
         ]}
       >
-        <InputAddress onClick={showModal} value={isAddress + ' ' + isDetail} />
+        <InputAddress
+          onClick={showModal}
+          placeholder={isAddress.concat(' ').concat(isDetail)}
+          readOnly={true}
+        />
       </Form.Item>
-      <Modal
+      <PopUpAddress
         title={
           isAddress.length > 0 ? (
             <div>
@@ -76,12 +77,16 @@ function PostCode({ setAddress }: PostCodeProps) {
             </Btn>
           </>
         )}
-      </Modal>
-    </div>
+      </PopUpAddress>
+    </PostCodeStyle>
   );
 }
 
 export default PostCode;
+
+const PostCodeStyle = styled.div`
+  position: relative;
+`;
 
 const InputAddress = styled(Input)`
   background: ${(props) => props.theme.color.lightGray};
@@ -93,4 +98,26 @@ const InputAddress = styled(Input)`
 const PrintAddress = styled.p`
   padding: 1.2rem;
   border-bottom: 1px solid ${(props) => props.theme.color.blue};
+`;
+
+const PopUpAddress = styled(Modal)`
+  .ant-modal-body {
+    padding: 0 !important;
+  }
+  ${({ theme }) => theme.mobile`
+    .ant-modal::after{
+      position: absolute;
+      max-width: 100% !important;
+      margin: 0 !important !important;
+      top: 0 !important !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    .ant-modal-body {
+      height: 90vh !important;
+    }
+    iframe{
+      height: 90vh !important;
+    }
+  `}
 `;

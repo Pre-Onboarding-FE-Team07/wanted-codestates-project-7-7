@@ -1,4 +1,4 @@
-export interface userProps {
+export interface userType {
   name: string;
   phone: string;
   address: string;
@@ -7,4 +7,21 @@ export interface userProps {
   agreement: boolean;
 }
 
-export type UserListState = userProps[];
+export type userId = string | undefined;
+
+export type userSelectType = userType[];
+
+export type userListType = {
+  id: userId;
+  userList: userType[];
+};
+
+export type allUserListType = userListType[];
+
+export interface disabledCheckType {
+  label: string;
+  required: boolean;
+  value: stinrg | boolean | undefined;
+}
+
+export type disabledCheckUserData = disabledCheckType[];
