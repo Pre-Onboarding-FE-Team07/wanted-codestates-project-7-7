@@ -5,11 +5,11 @@ export interface componentType {
 }
 
 export interface FileType {
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  setUrl: (value: string) => void;
   item: FieldType;
 }
 
 export interface PostCodeType {
-  setAddress: React.Dispatch<React.SetStateAction<string>>;
+  setAddress: (value: string) => void;
   item: FieldType;
 }
