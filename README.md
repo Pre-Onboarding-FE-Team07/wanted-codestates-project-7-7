@@ -103,7 +103,63 @@ javascript 개발 시에 draggable 라이브러리를 사용해 본 경험이 �
 
 
 ## 이예지
+생성된 폼 확인(설문지 입력) 및 설문지 별 사용자 데이터 목록(설문지 결과)
 
-#### 구현한 방법
+### 구현한 방법
 
-#### 어려웠던 점 (에러 핸들링)
+인원이 적기에 해당 폼을 구현할 수 있을까라는 걱정과 함께 화면 디자인의 통일성을 위해서 [Ant Design 라이브러리](https://ant.design/)를 사용해보면 어떨까요?라는 제안을 했었습니다. 팀원분들이 적극적으로 의견을 수용해주셨고, 그 결과 antD라이브러리를 통해 해당 페이지를 완성할 수 있었습니다. 웬만하면 해당 라이브러리를 이용하여 기능을 구현하려고 하였지만, 예상치 못했던 라이브러리 오류로 인해 더 힘들었고, 해당 라이브러리를 분석하는데 오히려 시간을 더 투자했었던 기억이 있습니다. 우선 TypeScript를 통해 해당 만들어진 라이브러리가 어떤 타입으로 이뤄져있는지 처음에는 알 수가 없어서 당황을 많이 했었습니다. 하지만 타고타고 들어가서 해당 라이브러리의 타입을 알 수 있었고, 그 타입들로 이루어진 파일을 보니깐 TypeScript에 대해서 좀 더 알 수 있었습니다. 이제 제가 맡은 기능에 대해 설명을 드리겠습니다. 생성된 폼을 확인하여 설문지를 입력하기 위해서는 팀원분이 만들어놓은 Context API의 `FormListContext`를 이용하여 해당 폼 결과를 알 수 있어야 했었습니다. 그렇기에 param id와 FormListContext에 id와 일치하는 결과를 찾아서 해당 값의 최적화를 위해 useMemo에 담아서 활용하였습니다.
+```jsx
+ const { id } = useParams();
+  const matchData = useMemo(
+    () => formListState.formList.filter((item) => item.id === id)[0].fieldList,
+    [formListState.formList, id]
+  );
+```
+또한 해당하는 폼에 맞게 설문지 입력을 할 수 있는 폼을 생성해야하므로, `switch-case`를 이용하여 해당 type에 맞게 화면을 출력할 수 있도록 하였습니다.
+```jsx
+const componentType = (item: FieldType) => {
+    switch (item.type) {
+      case 'text':
+        return <Name item={item} />;
+      case 'phone':
+        return <Phone item={item} />;
+      case 'address':
+        return <PostCode setAddress={setAddress || tempAction} item={item} />;
+      case 'select':
+        return <SelectBox item={item} />;
+      case 'file':
+        return <File setUrl={setUrl || tempAction} item={item} />;
+      case 'agreement':
+        return <Agreement item={item} />;
+      default:
+        return null;
+    }
+  };
+```
+
+### 어려웠던 점 (에러 핸들링)
+
+**1) 타입스크립트를 이용한 context API**
+어떤 타입을 넣어주어야하는지 굉장히 고민이 많았습니다. 
+특히 아래의 코드와 같이 코드를 짤 때 `() => {}` 함수를 통해 해당 state를 변경해주는 작업을 많이 했던 때라 어떤 타입을 두어야 맞는 타입인지 정말 고민을 많이 하며 찾았었습니다.
+```jsx
+export const AddressContext = createContext({
+  jusoData: {},
+  setJusoData: () => {},
+});
+```
+하지만 [해당 블로그](https://velog.io/@velopert/typescript-context-api)에서 상태 context와 디스패치 전용 context를 만든다면 낭비 렌더링을 방지할 수 있다고 했기에 바로 적용을 하였고, 더 좋은 결과를 얻을 수 있었습니다.
+![](https://images.velog.io/images/ye-ji/post/4f6db1fc-2432-4288-b3a0-4623e9654f72/image.png)
+
+**2) 상태(state) 끌어올리기**
+
+antD을 이용하면, onFinish()함수를 이용하여 사용자가 입력한 데이터를 받아올 수 있습니다. 하지만 주소를 입력받는 폼은 onChange 이벤트가 변경되지 않았기에 AntD자체에서 해당 값이 undefined로 계속되었습니다. 이 문제를 해결하기 위해 자식 컴포넌트에서 부모 컴포넌트로 어떻게 하면 해당 값을 가져올 수 있을까에 대한 고민과 방법을 찾기위해 많은 노력을 하였습니다. 첫번째로는 context API를 Object형식으로 만들어서 각 필드마다 해당 된 데이터를 넣어보자라는 생각으로 코드를 작성하였습니다. 하지만 해당 값을 넣어도 바로 즉각적으로 부모에서 바뀌는 것을 확인할 수 없었고, state값이 변경되면 컴포넌트가 다시 리렌더링 된다라는 생각과 함께 props로 setState를 넘겨주면 해당 이벤트가 실행되겠다라는 생각으로 state의 변경된 값을 확인할 수 있었습니다.
+
+**3) 데이터 형태 만들기**
+어떠한 데이터 형태로 만들어야 해당 데이터를 잘 뽑을 수 있을까에 대한 고민이 많았습니다. 첫번째로는 그냥 Array로 만들어서 설문지 결과를 출력할 수 있도록 로직을 작성하자하였지만 만들고 나니 설문지 입력할 수 있는 폼이 많이 생성되면 해당 폼에 따른 사용자 데이터를 어떻게 보지?라는 의문과 함께 데이터 형태를 아래와 같이 수정하여 결과를 잘 출력할 수 있었습니다. 이러한 문제를 겪으면서 어떠한 기능을 만들 때 좀 더 설계를 확실히 하여 반복되는 일은 줄여야겠다는 생각을 가지게 되었습니다.
+```jsx
+export type userListType = {
+  id: userId;
+  userList: userType[];
+};
+```
